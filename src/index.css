@@ -1,0 +1,34 @@
+:root {
+  --player-width: 25vw;
+  --player-side-width: 7vw;
+  --player-content-width: 15vw;
+}
+
+html,
+body {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-image: url("/background-dark.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@media screen and (max-width: 1000px) {
+  :root {
+    --player-width: 85vw;
+    --player-side-width: 25vw;
+    --player-content-width: 50.5vw;
+  }
+}
