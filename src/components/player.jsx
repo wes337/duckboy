@@ -11,24 +11,24 @@ export default function Player() {
   return (
     <div class={styles.player}>
       <div class={styles.header}>
-        <img src="/slices/player_header3.png" />
+        <img src="/player/header.png" />
       </div>
       <div class={styles.body}>
         <img
           class={styles.bodyImage}
-          src="/slices/player_body_01.png"
+          src="/player/body-top.png"
           style={{ "grid-column": "1 / 4" }}
         />
-        <img class={styles.bodyImage} src="/slices/player_body_022.png" />
-        <img class={styles.bodyImage} src="/slices/player_body_03.png" />
-        <img class={styles.bodyImage} src="/slices/player_body_04.png" />
+        <img class={styles.bodyImage} src="/player/body-left.png" />
+        <img class={styles.bodyImage} src="/player/body-center.png" />
+        <img class={styles.bodyImage} src="/player/body-right.png" />
         <img
           class={styles.bodyImage}
-          src="/slices/player_body_05.png"
+          src="/player/body-bottom.png"
           style={{ "grid-column": "1 / 4" }}
         />
-        <img class={styles.leftSpeaker} src="/slices/player_04.png" />
-        <img class={styles.rightSpeaker} src="/slices/player_06.png" />
+        <img class={styles.leftSpeaker} src="/player/left-speaker.png" />
+        <img class={styles.rightSpeaker} src="/player/right-speaker.png" />
         <button
           classList={{
             [styles.ashtray]: true,
@@ -36,7 +36,7 @@ export default function Player() {
           }}
           onClick={() => setAshtrayOpen((open) => !open)}
         >
-          <img src="/slices/player_03.png" />
+          <img src="/player/ashtray.png" />
         </button>
         <Content />
         <Controls />
@@ -77,25 +77,25 @@ function VolumeSlider(props) {
   });
 
   onCleanup(() => {
-    window.removeEventListener("mousemove", onMouseMove);
-    window.removeEventListener("mouseup", onMouseUp);
+    window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointerup", onPointerUp);
   });
 
-  const onMouseDown = (event) => {
+  const onPointerDown = (event) => {
     setGrabbing(true);
     setStartY(event.clientY);
 
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
   };
 
-  const onMouseUp = () => {
+  const onPointerUp = () => {
     setGrabbing(false);
-    window.removeEventListener("mousemove", onMouseMove);
-    window.removeEventListener("mouseup", onMouseUp);
+    window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointerup", onPointerUp);
   };
 
-  const onMouseMove = (event) => {
+  const onPointerMove = (event) => {
     if (!grabbing()) {
       return;
     }
@@ -118,9 +118,9 @@ function VolumeSlider(props) {
       style={{
         bottom: `${bottom()}%`,
       }}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
-      onMouseMove={onMouseMove}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerMove={onPointerMove}
     >
       <img src="/player/slider.png" />
     </button>

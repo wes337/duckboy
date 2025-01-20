@@ -25,6 +25,11 @@ body {
   background-position: center;
 }
 
+img {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
 @media screen and (max-width: 1000px) {
   :root {
     --player-width: 85vw;
