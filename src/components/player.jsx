@@ -1,4 +1,5 @@
 import { createEffect, createSignal, onCleanup } from "solid-js";
+import { playSoundEffect } from "../utils";
 import styles from "./player.module.css";
 
 export default function Player() {
@@ -34,15 +35,41 @@ export default function Player() {
             [styles.ashtray]: true,
             [styles.ashtrayClosed]: !ashtrayOpen(),
           }}
-          onClick={() => setAshtrayOpen((open) => !open)}
+          onClick={() => {
+            setAshtrayOpen((open) => {
+              if (open) {
+                playSoundEffect("latch-close.mp3");
+              } else {
+                playSoundEffect("latch-open.mp3");
+              }
+
+              return !open;
+            });
+          }}
         >
           <img src="/player/ashtray.png" />
         </button>
         <Content />
         <Controls />
         <VolumeSlider onChange={onVolumeChange} />
-        <button class={styles.tvButton} />
-        <button class={styles.settingsButton} />
+        <button
+          class={styles.tvButton}
+          onClick={() => {
+            playSoundEffect("click-glass.mp3");
+          }}
+        />
+        <button
+          class={styles.settingsButton}
+          onClick={() => {
+            playSoundEffect("click-soft.mp3");
+          }}
+        />
+        <button
+          class={styles.duckButton}
+          onClick={() => {
+            playSoundEffect("duck.mp3");
+          }}
+        />
       </div>
     </div>
   );
@@ -55,10 +82,30 @@ function Content() {
 function Controls(props) {
   return (
     <div class={styles.controls}>
-      <button class={styles.play} />
-      <button class={styles.back} />
-      <button class={styles.forward} />
-      <button class={styles.stop} />
+      <button
+        class={styles.play}
+        onClick={() => {
+          playSoundEffect("click-hard.mp3");
+        }}
+      />
+      <button
+        class={styles.back}
+        onClick={() => {
+          playSoundEffect("click-hard.mp3");
+        }}
+      />
+      <button
+        class={styles.forward}
+        onClick={() => {
+          playSoundEffect("click-hard.mp3");
+        }}
+      />
+      <button
+        class={styles.stop}
+        onClick={() => {
+          playSoundEffect("click-hard.mp3");
+        }}
+      />
     </div>
   );
 }
