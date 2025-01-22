@@ -1,4 +1,5 @@
 import Player from "./components/player";
+import DropTab from "./components/drop-tab";
 import styles from "./app.module.css";
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div class={styles.app}>
       <main>
         <Player />
+        <DropTab />
       </main>
     </div>
   );
