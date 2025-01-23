@@ -222,17 +222,26 @@ export default function DropTab() {
           onClick={() => {
             setFrozen(3);
             playSoundEffect("witch.mp3");
+            setOpen(false);
           }}
         >
           Evil Witch
         </button>
         <button onClick={() => spawnRougarou()}>Rougarou Attack</button>
-        <button onClick={() => setAids(true)}>PC Aids</button>
+        <button
+          onClick={() => {
+            setAids(true);
+            setOpen(false);
+          }}
+        >
+          PC Aids
+        </button>
         <button>Duckie</button>
         <button
           onClick={() => {
             setDuckHunt(true);
             playSoundEffect("cock.wav");
+            setOpen(false);
           }}
         >
           Duck Hunt

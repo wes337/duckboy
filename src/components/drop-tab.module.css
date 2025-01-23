@@ -157,3 +157,18 @@
     opacity: 0;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .shotgun {
+    width: 100%;
+    right: 0;
+    z-index: 4;
+  }
+
+  .duck {
+    img {
+      width: 20vw;
+      height: auto;
+    }
+  }
+}
