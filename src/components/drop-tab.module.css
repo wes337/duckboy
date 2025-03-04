@@ -158,7 +158,7 @@
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 900px) {
   .shotgun {
     width: 100%;
     right: 0;

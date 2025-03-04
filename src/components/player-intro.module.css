@@ -1,0 +1,135 @@
+.playerIntro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(0%);
+}
+
+.playerIntro button {
+  all: unset;
+  cursor: pointer;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 40rem;
+  max-width: 80vw;
+  height: 8rem;
+  z-index: 2;
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 1s ease;
+  animation: pulse 1s infinite alternate-reverse;
+  filter: drop-shadow(0 0 4px black);
+}
+
+.playerIntro button span {
+  display: flex;
+  font-size: 5rem;
+  line-height: 1;
+  text-transform: uppercase;
+  font-family: var(--medieval-font);
+  color: #222222;
+  text-shadow: 0.2rem 0 0 #fb7740;
+  translate: 0 0.3rem;
+}
+
+.playerIntro button:hover {
+  animation: none;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 4px black);
+}
+
+.playerIntro button:active,
+.playerIntro button:focus {
+  animation: none;
+  transform: scale(1.5);
+}
+
+.playerIntro img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  translate: 0% 65%;
+  filter: drop-shadow(0 0 4px black);
+}
+
+.playerIntro.hide {
+  animation: hide-intro;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  transform: translateY(200%);
+}
+
+.playerIntro.hide button {
+  top: 100%;
+  animation: none;
+}
+
+.playerIntro.done {
+  display: none;
+  pointer-events: none;
+}
+
+.playerIntro .goldButton {
+  all: unset;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+@media screen and (max-width: 900px) {
+  .playerIntro img {
+    width: 200%;
+    translate: -25% 65%;
+  }
+
+  .playerIntro button {
+    width: 80vw;
+    height: 5rem;
+  }
+
+  .playerIntro button span {
+    font-size: 3rem;
+    translate: 0 0.2rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .playerIntro img {
+    width: 200%;
+    translate: -26% 58.75%;
+  }
+
+  .playerIntro.hide {
+    animation-timing-function: cubic-bezier(0.3, -0.09, 0.735, 0.045);
+  }
+}
+
+@keyframes hide-intro {
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.05);
+  }
+}

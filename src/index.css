@@ -1,7 +1,18 @@
+@font-face {
+  font-family: "Old Wizard";
+  src: url("/fonts/OldWizard.ttf") format("truetype");
+}
+
 :root {
   --player-width: 25vw;
   --player-side-width: 7vw;
   --player-content-width: 15vw;
+  --cdn-url: "https://w-img.b-cdn.net/duckboy";
+  --header-font: "Sigmar One", sans-serif;
+  --body-font: "Sigmar", sans-serif;
+  --ui-font: "Yatra One", system-ui;
+  --medieval-font: "Old Wizard", system-ui;
+  --pixel-font: "Jersey 15", sans-serif;
 }
 
 html,
@@ -19,10 +30,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-image: url("/background-dark.png");
+  background-image: url("https://w-img.b-cdn.net/duckboy/images/swamp-md.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+body:before {
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 img {
@@ -30,10 +51,26 @@ img {
   user-select: none !important;
 }
 
-@media screen and (max-width: 1000px) {
+button,
+input[type="button"],
+input[type="submit"] {
+  touch-action: manipulation !important;
+}
+
+@media screen and (min-width: 1900px) {
+  body {
+    background-image: url("https://w-img.b-cdn.net/duckboy/images/swamp-lg.png");
+  }
+}
+
+@media screen and (max-width: 900px) {
   :root {
     --player-width: 85vw;
     --player-side-width: 25vw;
     --player-content-width: 50.5vw;
+  }
+
+  body {
+    background-image: url("https://w-img.b-cdn.net/duckboy/images/swamp-mobile.png");
   }
 }
