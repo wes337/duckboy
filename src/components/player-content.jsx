@@ -13,6 +13,7 @@ import styles from "./player-content.module.css";
 export default function PlayerContent() {
   let audio = new Audio();
   audio.crossOrigin = "anonymous";
+  let audioCtx = new AudioContext();
 
   const [currentTime, setCurrentTime] = createSignal("00:00");
   const [currentDuration, setCurrentDuration] = createSignal("00:00");
@@ -30,7 +31,6 @@ export default function PlayerContent() {
     let interval;
 
     const analyzeAudio = () => {
-      let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       let audioSource = null;
       let analyser = null;
 

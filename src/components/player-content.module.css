@@ -20,7 +20,7 @@
   height: 100%;
   object-fit: fill;
   border-radius: 4px;
-  opacity: 0.2;
+  opacity: 0.1;
   pointer-events: none;
   z-index: 2;
   mix-blend-mode: multiply;
@@ -129,7 +129,10 @@
 .playerContent .cover {
   position: relative;
   display: flex;
+  align-items: center;
+  justify-content: center;
   max-height: calc(700 / 1288 * 100%);
+
   margin: auto;
   margin-bottom: 0;
   outline: 0.2rem ridge #fb784033;
@@ -150,6 +153,7 @@
 
 .playerContent .cover img {
   height: 100%;
+  width: 100%;
   object-fit: contain;
   border-radius: 4px;
 }
@@ -180,6 +184,10 @@
   background-color: #fb784033;
   margin: 0.2rem 0;
   width: calc(100% - var(--player-padding) * 2);
+
+  marquee {
+    width: 100%;
+  }
 }
 
 .playerContent .details .duration {
