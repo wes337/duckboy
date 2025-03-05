@@ -47,3 +47,13 @@ export const calculateTime = (seconds) => {
     return `00:00`;
   }
 };
+
+export function isMacOS() {
+  const isMacUserAgent = /Mac OS X/i.test(navigator.userAgent);
+  const isMacPlatform = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+  const isMacUserAgentData = navigator.userAgentData
+    ? navigator.userAgentData.platform === "macOS"
+    : false;
+
+  return isMacUserAgent || isMacPlatform || isMacUserAgentData;
+}

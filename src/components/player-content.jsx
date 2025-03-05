@@ -6,14 +6,13 @@ import {
   createMemo,
   Switch,
 } from "solid-js";
-import { calculateTime } from "../utils";
+import { calculateTime, isMacOS } from "../utils";
 import state from "../state";
 import styles from "./player-content.module.css";
 
 export default function PlayerContent() {
   let audio = new Audio();
   audio.crossOrigin = "anonymous";
-  let audioCtx = new AudioContext();
 
   const [currentTime, setCurrentTime] = createSignal("00:00");
   const [currentDuration, setCurrentDuration] = createSignal("00:00");
@@ -28,9 +27,14 @@ export default function PlayerContent() {
   });
 
   onMount(() => {
+    if (isMacOS()) {
+      return;
+    }
+
     let interval;
 
     const analyzeAudio = () => {
+      let audioCtx = new AudioContext();
       let audioSource = null;
       let analyser = null;
 
