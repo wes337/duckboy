@@ -15,12 +15,22 @@
 }
 
 .playerContent .static {
+  position: absolute;
   width: 100%;
   height: 100%;
   object-fit: fill;
   border-radius: 4px;
-  opacity: 0.5;
+  opacity: 0.2;
   pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: multiply;
+  user-select: none;
+  transition: all 0.1s ease;
+}
+
+.playerContent .static.on {
+  opacity: 1;
+  mix-blend-mode: normal;
 }
 
 .playerContent .audio {

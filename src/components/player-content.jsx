@@ -22,7 +22,8 @@ export default function PlayerContent() {
     () => state.player.tracks[state.player.currentTrack]
   );
   const showAudio = createMemo(() => {
-    return currentTrack().type === "audio";
+    const introFinished = state.sceneDone("intro");
+    return introFinished && currentTrack().type === "audio";
   });
 
   onMount(() => {
@@ -124,11 +125,19 @@ export default function PlayerContent() {
   return (
     <>
       <div class={styles.playerContent}>
+        <video
+          classList={{ [styles.static]: true, [styles.on]: !showAudio() }}
+          src={`/videos/crt-2.mp4`}
+          autoplay
+          playsinline
+          muted
+          loop
+        />
         <Switch
           fallback={
             <video
               class={styles.static}
-              src={`/videos/crt-2.mp4`}
+              src={`/videos/crt.mp4`}
               autoplay
               playsinline
               muted
