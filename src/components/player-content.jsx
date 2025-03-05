@@ -1,5 +1,6 @@
 import {
   onMount,
+  onCleanup,
   createEffect,
   createSignal,
   createMemo,
@@ -25,7 +26,50 @@ export default function PlayerContent() {
   });
 
   onMount(() => {
+    let interval;
+
+    const analyzeAudio = () => {
+      let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      let audioSource = null;
+      let analyser = null;
+
+      audioSource = audioCtx.createMediaElementSource(audio);
+      analyser = audioCtx.createAnalyser();
+      audioSource.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      analyser.fftSize = 128;
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      interval = setInterval(() => {
+        analyser.getByteFrequencyData(dataArray);
+
+        let value = null;
+
+        for (let i = 0; i < bufferLength; i++) {
+          const amount = dataArray[i];
+
+          if (amount !== 0 && (value == null || dataArray[i] < value)) {
+            value = dataArray[i];
+          }
+        }
+
+        if (value == null) {
+          state.setSpeakerBoom("1");
+        } else {
+          value = value / 4;
+          state.setSpeakerBoom((1 + parseInt(value) / 100).toFixed(2));
+        }
+      }, 50);
+    };
+
     analyzeAudio();
+
+    onCleanup(() => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    });
   });
 
   createEffect(() => {
@@ -34,13 +78,11 @@ export default function PlayerContent() {
     }
 
     if (currentTrack().src !== audio.src) {
-      console.log("here");
       setCurrentTime("00:00");
       setCurrentDuration("00:00");
       setSeekPercentage(0);
       audio.src = currentTrack().src;
     } else {
-      console.log("HERE!?");
       audio.play();
     }
 
@@ -78,45 +120,6 @@ export default function PlayerContent() {
     audio.volume = volume;
     audio.muted = volume === 0;
   });
-
-  const analyzeAudio = () => {
-    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    let audioSource = null;
-    let analyser = null;
-
-    audioSource = audioCtx.createMediaElementSource(audio);
-    analyser = audioCtx.createAnalyser();
-    audioSource.connect(analyser);
-    analyser.connect(audioCtx.destination);
-    analyser.fftSize = 128;
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-
-    let barHeight;
-
-    const animate = () => {
-      analyser.getByteFrequencyData(dataArray);
-      for (let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i];
-
-        // if (!barHeight || barHeight <= 50) {
-        //   state.setSpeakerBoom("1");
-        // } else if (barHeight > 50 && barHeight <= 100) {
-        //   state.setSpeakerBoom("1.05");
-        // } else if (barHeight > 150 && barHeight <= 200) {
-        //   state.setSpeakerBoom("1.1");
-        // } else if (barHeight > 200 && barHeight <= 250) {
-        //   state.setSpeakerBoom("1.15");
-        // } else if (barHeight > 250) {
-        //   state.setSpeakerBoom("1.2");
-        // }
-      }
-
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-  };
 
   return (
     <>

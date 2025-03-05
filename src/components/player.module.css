@@ -45,7 +45,7 @@
   z-index: -1;
   transform: scale(1);
   will-change: transform;
-  transition: transform 0.07s ease;
+  transition: transform 0.05s ease;
 }
 
 @media screen and (max-width: 900px) {

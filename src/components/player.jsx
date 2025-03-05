@@ -1,5 +1,4 @@
-import { createEffect, onCleanup } from "solid-js";
-import { throttle } from "@solid-primitives/scheduled";
+import { createEffect } from "solid-js";
 import state from "../state";
 import { playSoundEffect } from "../utils";
 import Ashtray from "./ashtray";
@@ -11,7 +10,7 @@ import styles from "./player.module.css";
 
 export default function Player() {
   createEffect(() => {
-    // console.log(state.speakerBoom());
+    state.speakerBoom();
   });
 
   createEffect(() => {
@@ -47,7 +46,7 @@ export default function Player() {
         }}
         onAnimationEnd={() => state.sceneNextStep("intro")}
       >
-        <img class={styles.playerBody} src={`/player/player-speakerless.png`} />
+        <img class={styles.playerBody} src={`/player/player-no-speakers.png`} />
         <img
           class={styles.speakerLeft}
           src={`/player/speaker-left.png`}
