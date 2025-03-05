@@ -16,7 +16,7 @@ export default function DropTab() {
       const imagesToPreload = [
         "/images/rougarou.gif",
         "/images/ice.jpg",
-        "/images/duck.gif",
+        "/images/duck-fly.gif",
         "/images/duck-dead.png",
       ];
       imagesToPreload.forEach((src) => {
@@ -97,7 +97,7 @@ export default function DropTab() {
 
       const duck = document.createElement("div");
       const img = document.createElement("img");
-      img.src = `/images/duck.gif`;
+      img.src = `/images/duck-fly.gif`;
       const deadImg = document.createElement("img");
       deadImg.src = `/images/duck-dead.png`;
       deadImg.className = styles.deadDuck;

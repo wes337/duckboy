@@ -9,7 +9,7 @@
 
 .player.visible {
   animation: player-intro;
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-iteration-count: 1;
   animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   transform: translateY(0%);
@@ -24,6 +24,28 @@
   object-fit: contain;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
   user-select: none;
+}
+
+.speakerLeft {
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  width: 19%;
+  z-index: -1;
+  transform: scale(1);
+  will-change: transform;
+  transition: transform 0.05s ease;
+}
+
+.speakerRight {
+  position: absolute;
+  bottom: 5%;
+  right: -0.5%;
+  width: 19%;
+  z-index: -1;
+  transform: scale(1);
+  will-change: transform;
+  transition: transform 0.07s ease;
 }
 
 @media screen and (max-width: 900px) {

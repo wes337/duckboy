@@ -1,5 +1,5 @@
 import Player from "./components/player";
-import DropTab from "./components/drop-tab";
+import DuckHunt from "./components/duck-hunt";
 import styles from "./app.module.css";
 import Footer from "./components/footer";
 
@@ -8,6 +8,7 @@ function App() {
     <div class={styles.app}>
       <Player />
       <Footer />
+      <DuckHunt />
     </div>
   );
 }

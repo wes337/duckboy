@@ -1,24 +1,24 @@
-import { createEffect, createSignal, onCleanup } from "solid-js";
+import { createEffect, onCleanup } from "solid-js";
 import { playSoundEffect } from "../utils";
 import state from "../state";
 import styles from "./ashtray.module.css";
 
 export default function Ashtray() {
   let timeout;
-  const [intro, setIntro] = createSignal(false);
 
   createEffect(() => {
-    if (intro()) {
+    const showIntroAnimation = state.scenes.intro.currentStep === 1;
+
+    if (!showIntroAnimation) {
       return;
     }
 
-    if (state.introDone()) {
-      onClickAshtray();
+    onClickAshtray();
 
-      timeout = setTimeout(() => {
-        onClickAshtray();
-      }, 750);
-    }
+    timeout = setTimeout(() => {
+      onClickAshtray();
+      state.sceneNextStep("intro");
+    }, 750);
 
     onCleanup(() => {
       if (timeout) {

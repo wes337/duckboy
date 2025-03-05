@@ -35,3 +35,15 @@ export const playSoundEffect = (soundEffect, quiet) => {
 export const randomNumberBetween = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+export const calculateTime = (seconds) => {
+  try {
+    const _minute = Math.floor(seconds / 60);
+    const minute = _minute < 10 ? `0${_minute}` : `${_minute}`;
+    const _second = Math.floor(seconds % 60);
+    const second = _second < 10 ? `0${_second}` : `${_second}`;
+    return `${minute}:${second}`;
+  } catch {
+    return `00:00`;
+  }
+};

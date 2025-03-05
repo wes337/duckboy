@@ -7,14 +7,14 @@ export default function PlayerIntro() {
     <div
       classList={{
         [styles.playerIntro]: true,
-        [styles.hide]: state.playerVisible(),
-        [styles.done]: state.introDone(),
+        [styles.hide]: state.player.visible,
+        [styles.done]: state.sceneDone("intro"),
       }}
     >
       <button
         class={styles.button}
         onClick={() => {
-          state.setPlayerVisible(true);
+          state.setPlayer("visible", true);
           playSoundEffect("click-soft.mp3");
           setTimeout(() => playSoundEffect("click-hard.mp3"), 100);
         }}

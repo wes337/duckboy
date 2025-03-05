@@ -13,7 +13,7 @@ export default function VolumeSlider() {
 
   createEffect(() => {
     const volume = ((bottom() - MIN_BOTTOM) / (MAX_BOTTOM - MIN_BOTTOM)) * 100;
-    state.setVolume(volume);
+    state.setPlayer("volume", volume);
   });
 
   onCleanup(() => {

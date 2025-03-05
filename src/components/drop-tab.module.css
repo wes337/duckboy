@@ -142,12 +142,16 @@
   position: fixed;
   top: 0;
   left: 0;
-  cursor: pointer;
+  cursor: crosshair;
   z-index: 3;
+  user-select: none;
+  touch-action: manipulation !important;
 
   img {
     user-select: none;
     pointer-events: none;
+    filter: drop-shadow(2px 2px 2px black);
+    will-change: filter;
   }
 
   .deadDuck {
