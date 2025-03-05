@@ -7,6 +7,7 @@ import {
   Switch,
 } from "solid-js";
 import { calculateTime, isMacOS } from "../utils";
+import audioAnalyzer from "../audio-analyzer";
 import state from "../state";
 import styles from "./player-content.module.css";
 
@@ -31,49 +32,18 @@ export default function PlayerContent() {
       return;
     }
 
-    let interval;
+    const analyzer = audioAnalyzer(audio);
 
-    const analyzeAudio = () => {
-      let audioCtx = new AudioContext();
-      let audioSource = null;
-      let analyser = null;
-
-      audioSource = audioCtx.createMediaElementSource(audio);
-      analyser = audioCtx.createAnalyser();
-      audioSource.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      analyser.fftSize = 128;
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-
-      interval = setInterval(() => {
-        analyser.getByteFrequencyData(dataArray);
-
-        let value = null;
-
-        for (let i = 0; i < bufferLength; i++) {
-          const amount = dataArray[i];
-
-          if (amount !== 0 && (value == null || dataArray[i] < value)) {
-            value = dataArray[i];
-          }
-        }
-
-        if (value == null) {
-          state.setSpeakerBoom("1");
-        } else {
-          value = value / 4;
-          state.setSpeakerBoom((1 + parseInt(value) / 100).toFixed(2));
-        }
-      }, 50);
-    };
-
-    analyzeAudio();
+    const interval = setInterval(() => {
+      if (audio.duration > 0 && !audio.paused) {
+        analyzer((speakerBoom) => {
+          state.setSpeakerBoom(speakerBoom);
+        });
+      }
+    }, 50);
 
     onCleanup(() => {
-      if (interval) {
-        clearInterval(interval);
-      }
+      clearInterval(interval);
     });
   });
 
