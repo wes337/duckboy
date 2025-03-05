@@ -6,8 +6,6 @@
   height: auto;
   z-index: 10;
   opacity: 0;
-
-  transform: rotate(15deg);
 }
 
 .gun.show {
@@ -38,12 +36,18 @@
   opacity: 0;
 }
 
+.blood {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  opacity: 0;
+}
+
 @media screen and (max-width: 900px) {
   .gun {
     width: 50%;
     right: 0;
     z-index: 4;
-    transform: rotate(0);
   }
 
   .duck img {

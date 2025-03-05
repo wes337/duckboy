@@ -10,7 +10,7 @@ const [scenes, setScenes] = createStore(SCENES);
 const [player, setPlayer] = createStore({
   playing: false,
   currentTrack: 0,
-  volume: 1,
+  volume: 0.5,
   visible: false,
   tracks: TRACKS,
 });

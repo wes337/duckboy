@@ -5,7 +5,7 @@ import styles from "./volume-slider.module.css";
 
 export default function VolumeSlider() {
   const [grabbing, setGrabbing] = createSignal(false);
-  const [bottom, setBottom] = createSignal(42);
+  const [bottom, setBottom] = createSignal(32);
   const [startY, setStartY] = createSignal(0);
 
   const MAX_BOTTOM = 42;
