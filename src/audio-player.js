@@ -56,8 +56,6 @@ export default class AudioPlayer {
       })
     );
 
-    Howler.volume(DEFAULT_VOLUME);
-
     const analyser = AudioPlayer.analyser;
 
     const onAnimationFrame = () => {
@@ -70,24 +68,25 @@ export default class AudioPlayer {
         setStore("duration", duration);
       }
 
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
+      if (analyser) {
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        analyser.getByteFrequencyData(dataArray);
 
-      analyser.getByteFrequencyData(dataArray);
+        let value = null;
 
-      let value = null;
-
-      for (let i = 0; i < bufferLength; i++) {
-        const amount = dataArray[i];
-        if (amount !== 0 && (value == null || dataArray[i] < value)) {
-          value = dataArray[i];
+        for (let i = 0; i < bufferLength; i++) {
+          const amount = dataArray[i];
+          if (amount !== 0 && (value == null || dataArray[i] < value)) {
+            value = dataArray[i];
+          }
         }
-      }
 
-      setStore(
-        "speakerBoom",
-        value == null ? "1" : (1 + parseInt(value / 4) / 100).toFixed(2)
-      );
+        setStore(
+          "speakerBoom",
+          value == null ? "1" : (1 + parseInt(value / 4) / 100).toFixed(2)
+        );
+      }
 
       AudioPlayer.animation = requestAnimationFrame(onAnimationFrame);
     };
@@ -96,11 +95,11 @@ export default class AudioPlayer {
   }
 
   static cleanup() {
-    Howler.stop();
-
     if (AudioPlayer.animation) {
       cancelAnimationFrame(AudioPlayer.animation);
     }
+
+    Howler.stop();
   }
 
   static get state() {
@@ -207,6 +206,10 @@ export default class AudioPlayer {
   }
 
   static set volume(value) {
+    if (value == Howler.volume()) {
+      return;
+    }
+
     Howler.volume(parseFloat(value));
   }
 
