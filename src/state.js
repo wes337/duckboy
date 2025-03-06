@@ -24,12 +24,18 @@ const sceneNextStep = (scene) => {
 };
 
 const getChannel = () => {
+  if (videoPlayer.playing) {
+    return "Videos";
+  }
+
   if (AudioPlayer.playing) {
     return "Music";
   }
 
   return "None";
 };
+
+const [showContent, setShowContent] = createSignal("video");
 
 export default {
   introDone,
@@ -45,4 +51,7 @@ export default {
   getChannel,
   videoPlayer,
   setVideoPlayer,
+
+  showContent,
+  setShowContent,
 };

@@ -1,44 +1,96 @@
-import { createMemo, createSignal, Switch } from "solid-js";
+import {
+  createMemo,
+  createSignal,
+  createEffect,
+  onCleanup,
+  Switch,
+} from "solid-js";
+import { playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
 import styles from "./player-content.module.css";
 
 export default function PlayerContent() {
   const initialized = () => state.sceneDone("intro");
-  const [show, setShow] = createSignal("video");
+
+  const [crt, setCRT] = createSignal(3);
+  const [cameo, setCameo] = createSignal(1);
 
   const currentTrack = () => AudioPlayer.currentTrack;
 
+  let video;
+  let videoEnd;
+
   const showAudio = createMemo(() => {
-    return initialized() && show() === "audio";
+    return initialized() && state.showContent() === "audio";
   });
 
   const showVideo = createMemo(() => {
-    return initialized() && show() === "video";
+    return initialized() && state.showContent() === "video";
+  });
+
+  onCleanup(() => {
+    if (videoEnd) {
+      clearTimeout(videoEnd);
+    }
+  });
+
+  createEffect(() => {
+    if (state.showContent() !== "static") {
+      return;
+    }
+
+    AudioPlayer.pause();
+    playSoundEffect("static.mp3");
+    setCRT((crt) => {
+      const nextCRT = crt + 1;
+      const CRT_VIDEOS = 12;
+
+      if (nextCRT > CRT_VIDEOS) {
+        return 1;
+      }
+
+      return nextCRT;
+    });
   });
 
   const onVideoEnd = () => {
-    setShow("static");
-    setTimeout(() => {
-      setShow("audio");
+    state.setShowContent("static");
+    videoEnd = setTimeout(() => {
+      setCameo((cameo) => {
+        const nextCameo = cameo + 1;
+        const CAMEO_VIDS = 11;
+
+        if (nextCameo > CAMEO_VIDS) {
+          return 1;
+        }
+
+        return nextCameo;
+      });
+
+      state.setShowContent("audio");
       AudioPlayer.play();
       state.setVideoPlayer("playing", false);
     }, 500);
   };
 
   const onVideoStart = () => {
+    const volume = AudioPlayer.volume;
+    video.volume = volume;
     state.setVideoPlayer("playing", true);
+    AudioPlayer.pause();
   };
 
   return (
     <>
       <div class={styles.playerContent}>
         <video
+          ref={video}
           classList={{
             [styles.static]: true,
-            [styles.on]: !initialized() || show() === "static",
+            [styles.on]: !initialized() || state.showContent() === "static",
           }}
-          src={`/videos/crt-2.mp4`}
+          src={`/videos/fx/crt-${crt()}.mp4`}
           autoplay
           playsinline
           muted
@@ -48,7 +100,7 @@ export default function PlayerContent() {
           fallback={
             <video
               class={styles.static}
-              src={`/videos/crt.mp4`}
+              src={`/videos/fx/crt-${crt()}.mp4`}
               autoplay
               playsinline
               muted
@@ -59,7 +111,7 @@ export default function PlayerContent() {
           <Match when={showVideo()}>
             <div class={styles.video}>
               <video
-                src={`/videos/cameos/4.mp4`}
+                src={`/videos/cameos/short/${cameo()}.mp4`}
                 autoplay
                 playsinline
                 onPlay={onVideoStart}

@@ -1,8 +1,9 @@
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
 import Ashtray from "./ashtray";
+import TV from "./tv";
 import PlayerIntro from "./player-intro";
 import VolumeSlider from "./volume-slider";
 import Controls from "./controls";
@@ -11,6 +12,39 @@ import styles from "./player.module.css";
 
 export default function Player() {
   const [initialized, setInitialized] = createSignal(false);
+  const [highlightDuck, setHighlightDuck] = createSignal(false);
+
+  createEffect(async () => {
+    if (!initialized() || state.duckHunt()) {
+      return;
+    }
+
+    const highlightDuckButton = () => {
+      return new Promise((resolve) => {
+        playSoundEffect("quack.mp3");
+        setHighlightDuck(true);
+        setTimeout(() => {
+          setHighlightDuck(false);
+          resolve();
+        }, 500);
+      });
+    };
+
+    const timeout = setTimeout(async () => {
+      await highlightDuckButton();
+      await highlightDuckButton();
+    }, 100);
+
+    const interval = setInterval(async () => {
+      await highlightDuckButton();
+      await highlightDuckButton();
+    }, 30000);
+
+    onCleanup(() => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    });
+  });
 
   createEffect(() => {
     if (!AudioPlayer.state.visible) {
@@ -59,7 +93,14 @@ export default function Player() {
         <Ashtray />
         <VolumeSlider />
         <Controls />
-        <button class={styles.duckButton} onClick={onClickDuckButton}>
+        <TV />
+        <button
+          classList={{
+            [styles.duckButton]: true,
+            [styles.highlight]: highlightDuck(),
+          }}
+          onClick={onClickDuckButton}
+        >
           <img src={`/player/duck.png`} />
           <img src={`/player/duck-pressed.png`} />
         </button>

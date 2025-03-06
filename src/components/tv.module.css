@@ -1,0 +1,52 @@
+.tv {
+  all: unset;
+  display: flex;
+  cursor: pointer;
+  position: absolute;
+  z-index: 2;
+  width: 12%;
+  height: auto;
+  bottom: 4%;
+  left: 24.25%;
+  user-select: none;
+}
+
+.tv button {
+  all: unset;
+  position: relative;
+  display: flex;
+  user-select: none;
+}
+
+.tv .pressed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.1s ease, filter 0.1s ease;
+  user-select: none;
+  pointer-events: none;
+}
+
+.tv button:hover {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.75));
+}
+
+.tv button:active {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.05));
+}
+
+.tv button:active .pressed,
+.tv .pressed.on {
+  opacity: 1;
+}
+
+.tv button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}

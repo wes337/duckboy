@@ -205,6 +205,10 @@ export default class AudioPlayer {
     };
   }
 
+  static get volume() {
+    return Howler.volume();
+  }
+
   static set volume(value) {
     if (value == Howler.volume()) {
       return;
