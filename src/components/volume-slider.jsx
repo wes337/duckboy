@@ -1,5 +1,5 @@
 import { createSignal, createEffect, onCleanup } from "solid-js";
-import state from "../state";
+import AudioPlayer from "../audio-player";
 import { playSoundEffect } from "../utils";
 import styles from "./volume-slider.module.css";
 
@@ -12,8 +12,9 @@ export default function VolumeSlider() {
   const MIN_BOTTOM = 24;
 
   createEffect(() => {
-    const volume = ((bottom() - MIN_BOTTOM) / (MAX_BOTTOM - MIN_BOTTOM)) * 100;
-    state.setPlayer("volume", volume);
+    const volume =
+      (bottom() - MIN_BOTTOM) / (MAX_BOTTOM - MIN_BOTTOM).toFixed(2);
+    AudioPlayer.volume = volume;
   });
 
   onCleanup(() => {

@@ -1,33 +1,34 @@
 import { playSoundEffect } from "../utils";
-import state from "../state";
+import AudioPlayer from "../audio-player";
 import styles from "./controls.module.css";
 
 export default function Controls() {
   const onClickPlay = () => {
-    if (state.player.playing) {
+    if (AudioPlayer.playing) {
       return;
     }
 
     playSoundEffect("click-hard.mp3");
-    state.setPlayer("playing", true);
+    AudioPlayer.play();
   };
 
   const onClickRewind = () => {
     playSoundEffect("click-hard.mp3");
+    AudioPlayer.previous();
   };
 
   const onClickFastForward = () => {
     playSoundEffect("click-hard.mp3");
-    state.playerNextTrack();
+    AudioPlayer.next();
   };
 
   const onClickStop = () => {
-    if (!state.player.playing) {
+    if (!AudioPlayer.playing) {
       return;
     }
 
     playSoundEffect("click-hard.mp3");
-    state.setPlayer("playing", false);
+    AudioPlayer.pause();
   };
 
   return (
@@ -37,7 +38,7 @@ export default function Controls() {
         <img
           classList={{
             [styles.pressed]: true,
-            [styles.on]: state.player.playing,
+            [styles.on]: AudioPlayer.playing,
           }}
           src="/player/play-pressed.png"
         />
@@ -55,7 +56,7 @@ export default function Controls() {
         <img
           classList={{
             [styles.pressed]: true,
-            [styles.on]: !state.player.playing,
+            [styles.on]: !AudioPlayer.playing,
           }}
           src="/player/stop-pressed.png"
         />

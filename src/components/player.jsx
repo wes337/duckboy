@@ -1,6 +1,7 @@
-import { createEffect } from "solid-js";
-import state from "../state";
+import { createEffect, createSignal } from "solid-js";
 import { playSoundEffect } from "../utils";
+import AudioPlayer from "../audio-player";
+import state from "../state";
 import Ashtray from "./ashtray";
 import PlayerIntro from "./player-intro";
 import VolumeSlider from "./volume-slider";
@@ -9,12 +10,10 @@ import PlayerContent from "./player-content";
 import styles from "./player.module.css";
 
 export default function Player() {
-  createEffect(() => {
-    state.speakerBoom();
-  });
+  const [initialized, setInitialized] = createSignal(false);
 
   createEffect(() => {
-    if (!state.player.visible) {
+    if (!AudioPlayer.state.visible) {
       return;
     }
 
@@ -24,12 +23,13 @@ export default function Player() {
   createEffect(() => {
     const introDone = state.sceneDone("intro");
 
-    if (!introDone) {
+    if (!introDone || initialized()) {
       return;
     }
 
     console.log("Start player!");
-    state.setPlayer("playing", true);
+    AudioPlayer.play();
+    setInitialized(true);
   });
 
   const onClickDuckButton = (event) => {
@@ -42,7 +42,7 @@ export default function Player() {
       <div
         classList={{
           [styles.player]: true,
-          [styles.visible]: state.player.visible,
+          [styles.visible]: AudioPlayer.state.visible,
         }}
         onAnimationEnd={() => state.sceneNextStep("intro")}
       >
@@ -50,12 +50,12 @@ export default function Player() {
         <img
           class={styles.speakerLeft}
           src={`/player/speaker-left.png`}
-          style={{ transform: `scale(${state.speakerBoom()})` }}
+          style={{ transform: `scale(${AudioPlayer.state.speakerBoom})` }}
         />
         <img
           class={styles.speakerRight}
           src={`/player/speaker-right.png`}
-          style={{ transform: `scale(${state.speakerBoom()})` }}
+          style={{ transform: `scale(${AudioPlayer.state.speakerBoom})` }}
         />
         <PlayerContent />
         <Ashtray />
