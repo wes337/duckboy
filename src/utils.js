@@ -57,3 +57,27 @@ export function isMacOS() {
 
   return isMacUserAgent || isMacPlatform || isMacUserAgentData;
 }
+
+export async function preloadVideos(videoUrls) {
+  const videoPromises = videoUrls.map((url) => {
+    return new Promise((resolve, reject) => {
+      const video = document.createElement("video");
+
+      video.addEventListener("loadeddata", () => {
+        resolve(video);
+      });
+
+      video.addEventListener("error", (error) => {
+        reject(error);
+      });
+
+      video.preload = "auto";
+      video.muted = true;
+      video.volume = 0;
+      video.src = url;
+      video.load();
+    });
+  });
+
+  await Promise.all(videoPromises);
+}
