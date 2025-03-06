@@ -27,8 +27,6 @@ export default function Player() {
       return;
     }
 
-    console.log("Start player!");
-    AudioPlayer.play();
     setInitialized(true);
   });
 

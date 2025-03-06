@@ -9,6 +9,10 @@ const [duckHunt, setDuckHunt] = createSignal(false);
 
 const [scenes, setScenes] = createStore(SCENES);
 
+const [videoPlayer, setVideoPlayer] = createStore({
+  playing: false,
+});
+
 const sceneDone = (scene) => {
   return scenes[scene].currentStep >= scenes[scene].steps;
 };
@@ -39,4 +43,6 @@ export default {
   sceneDone,
   sceneNextStep,
   getChannel,
+  videoPlayer,
+  setVideoPlayer,
 };

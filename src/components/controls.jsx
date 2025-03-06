@@ -1,10 +1,11 @@
 import { playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
+import state from "../state";
 import styles from "./controls.module.css";
 
 export default function Controls() {
   const onClickPlay = () => {
-    if (AudioPlayer.playing) {
+    if (AudioPlayer.playing || state.videoPlayer.playing) {
       return;
     }
 
@@ -13,17 +14,25 @@ export default function Controls() {
   };
 
   const onClickRewind = () => {
+    if (state.videoPlayer.playing) {
+      return;
+    }
+
     playSoundEffect("click-hard.mp3");
     AudioPlayer.previous();
   };
 
   const onClickFastForward = () => {
+    if (state.videoPlayer.playing) {
+      return;
+    }
+
     playSoundEffect("click-hard.mp3");
     AudioPlayer.next();
   };
 
   const onClickStop = () => {
-    if (!AudioPlayer.playing) {
+    if (!AudioPlayer.playing || state.videoPlayer.playing) {
       return;
     }
 
@@ -33,25 +42,37 @@ export default function Controls() {
 
   return (
     <div class={styles.controls}>
-      <button classList={styles.play} onClick={onClickPlay}>
+      <button class={styles.play} onClick={onClickPlay}>
         <img src="/player/play.png" />
         <img
           classList={{
             [styles.pressed]: true,
-            [styles.on]: AudioPlayer.playing,
+            [styles.on]: AudioPlayer.playing || state.videoPlayer.playing,
           }}
           src="/player/play-pressed.png"
         />
       </button>
-      <button classList={styles.rewind} onClick={onClickRewind}>
+      <button class={styles.rewind} onClick={onClickRewind}>
         <img src="/player/rw.png" />
-        <img class={styles.pressed} src="/player/rw-pressed.png" />
+        <img
+          classList={{
+            [styles.pressed]: true,
+            [styles.on]: state.videoPlayer.playing,
+          }}
+          src="/player/rw-pressed.png"
+        />
       </button>
-      <button classList={styles.fastForward} onClick={onClickFastForward}>
+      <button class={styles.fastForward} onClick={onClickFastForward}>
         <img src="/player/ff.png" />
-        <img class={styles.pressed} src="/player/ff-pressed.png" />
+        <img
+          classList={{
+            [styles.pressed]: true,
+            [styles.on]: state.videoPlayer.playing,
+          }}
+          src="/player/ff-pressed.png"
+        />
       </button>
-      <button classList={styles.stop} onClick={onClickStop}>
+      <button class={styles.stop} onClick={onClickStop}>
         <img src="/player/stop.png" />
         <img
           classList={{

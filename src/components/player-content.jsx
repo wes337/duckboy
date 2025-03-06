@@ -1,21 +1,43 @@
-import { createMemo, Switch } from "solid-js";
+import { createMemo, createSignal, Switch } from "solid-js";
 import AudioPlayer from "../audio-player";
 import state from "../state";
 import styles from "./player-content.module.css";
 
 export default function PlayerContent() {
+  const initialized = () => state.sceneDone("intro");
+  const [show, setShow] = createSignal("video");
+
   const currentTrack = () => AudioPlayer.currentTrack;
 
   const showAudio = createMemo(() => {
-    const introFinished = state.sceneDone("intro");
-    return introFinished && currentTrack().type === "audio";
+    return initialized() && show() === "audio";
   });
+
+  const showVideo = createMemo(() => {
+    return initialized() && show() === "video";
+  });
+
+  const onVideoEnd = () => {
+    setShow("static");
+    setTimeout(() => {
+      setShow("audio");
+      AudioPlayer.play();
+      state.setVideoPlayer("playing", false);
+    }, 500);
+  };
+
+  const onVideoStart = () => {
+    state.setVideoPlayer("playing", true);
+  };
 
   return (
     <>
       <div class={styles.playerContent}>
         <video
-          classList={{ [styles.static]: true, [styles.on]: !showAudio() }}
+          classList={{
+            [styles.static]: true,
+            [styles.on]: !initialized() || show() === "static",
+          }}
           src={`/videos/crt-2.mp4`}
           autoplay
           playsinline
@@ -34,6 +56,17 @@ export default function PlayerContent() {
             />
           }
         >
+          <Match when={showVideo()}>
+            <div class={styles.video}>
+              <video
+                src={`/videos/cameos/4.mp4`}
+                autoplay
+                playsinline
+                onPlay={onVideoStart}
+                onEnded={onVideoEnd}
+              />
+            </div>
+          </Match>
           <Match when={showAudio()}>
             <div class={styles.audio}>
               <div class={styles.inner}>
