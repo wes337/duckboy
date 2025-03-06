@@ -1,9 +1,6 @@
 import { Howl, Howler } from "howler";
 import { createStore } from "solid-js/store";
 import { CDN_URL, calculateTime } from "./utils";
-import { createSignal } from "solid-js";
-
-const DEFAULT_VOLUME = 0.5;
 
 export default class AudioPlayer {
   static tracks = [
@@ -12,7 +9,6 @@ export default class AudioPlayer {
       name: "EXCALIBUR",
       cover: `${CDN_URL}/images/album/hymns.jpg`,
       url: `${CDN_URL}/music/EXCALIBUR.mp3`,
-      type: "audio",
     },
     {
       artist: "DUCKBOY",
@@ -21,14 +17,12 @@ export default class AudioPlayer {
       url: `${CDN_URL}/music/${encodeURIComponent(
         "my love life needs a lobotomy"
       )}.mp3`,
-      type: "audio",
     },
   ];
 
   static store = createStore({
     playing: null,
     currentTrackIndex: 0,
-    volume: 0.5,
     visible: false,
     playingPercentage: 0,
     tracks: AudioPlayer.tracks,

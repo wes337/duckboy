@@ -1,10 +1,12 @@
-import { playSoundEffect } from "../utils";
-import AudioPlayer from "../audio-player";
 import state from "../state";
 import styles from "./tv.module.css";
 
 export default function TV() {
   const onClickTV = () => {
+    if (state.videoPlayer.playing) {
+      return;
+    }
+
     state.setShowContent("static");
 
     setTimeout(() => {
