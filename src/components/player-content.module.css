@@ -249,11 +249,11 @@
   }
 
   .playerContent .details {
-    gap: 0.4rem;
+    gap: 0.6rem;
   }
 
   .playerContent .details .artist {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
   }
 
   .playerContent .details .name {
@@ -261,7 +261,7 @@
   }
 
   .playerContent .details .duration {
-    font-size: 0.8rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
   }
 }
