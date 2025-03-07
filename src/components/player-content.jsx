@@ -20,7 +20,6 @@ export default function PlayerContent() {
 
   const currentTrack = () => AudioPlayer.currentTrack;
 
-  let video;
   let videoEnd;
 
   const showAudio = createMemo(() => {
@@ -131,7 +130,17 @@ export default function PlayerContent() {
 
   const onVideoStart = () => {
     const volume = AudioPlayer.volume;
-    video.volume = volume;
+
+    const shortCameoVideo = document.getElementById("short-cameo");
+    if (shortCameoVideo) {
+      shortCameoVideo.volume = volume;
+    }
+
+    const longCameoVideo = document.getElementById("long-cameo");
+    if (longCameoVideo) {
+      longCameoVideo.volume = volume;
+    }
+
     state.setVideoPlayer("playing", true);
     AudioPlayer.pause();
   };
@@ -140,7 +149,6 @@ export default function PlayerContent() {
     <>
       <div class={styles.playerContent}>
         <video
-          ref={video}
           classList={{
             [styles.static]: true,
             [styles.on]: !initialized() || state.showContent() === "static",
@@ -166,6 +174,8 @@ export default function PlayerContent() {
           <Match when={showVideo()}>
             <div class={styles.video}>
               <video
+                id="short-cameo"
+                ref={video}
                 src={`${CDN_URL}/videos/short/${shortCameo()}.mp4`}
                 autoplay
                 playsinline
@@ -177,6 +187,7 @@ export default function PlayerContent() {
           <Match when={showVideoLong()}>
             <div class={styles.video}>
               <video
+                id="long-cameo"
                 src={`${CDN_URL}/videos/long/${longCameo()}.mp4`}
                 autoplay
                 playsinline

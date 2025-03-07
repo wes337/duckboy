@@ -26,7 +26,6 @@
   mix-blend-mode: multiply;
   user-select: none;
   transition: all 0.1s ease;
-  filter: grayscale(0.5);
 }
 
 .playerContent .static.on {
