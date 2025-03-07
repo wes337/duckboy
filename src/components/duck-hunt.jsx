@@ -72,9 +72,11 @@ export default function DuckHunt() {
       duck.appendChild(bloodImg);
       duck.className = styles.duck;
       duck.style.top = `${randomNumberBetween(0, window.innerHeight - 300)}px`;
+      duck.style.left = "-100px";
 
       const fly = setInterval(() => {
         const currentLeft = parseInt(duck.style.left) || 0;
+
         duck.style.left = `${currentLeft + window.innerWidth * 0.02}px`;
 
         if (currentLeft > window.innerWidth) {

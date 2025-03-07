@@ -5,7 +5,7 @@ import {
   onCleanup,
   Switch,
 } from "solid-js";
-import { playSoundEffect } from "../utils";
+import { CDN_URL, playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
 import styles from "./player-content.module.css";
@@ -14,7 +14,9 @@ export default function PlayerContent() {
   const initialized = () => state.sceneDone("intro");
 
   const [crt, setCRT] = createSignal(3);
-  const [cameo, setCameo] = createSignal(1);
+  const [shortCameo, setShortCameo] = createSignal(1);
+  const [longCameo, setLongCameo] = createSignal(1);
+  const [lastVideoEnded, setLastVideoEnded] = createSignal(null);
 
   const currentTrack = () => AudioPlayer.currentTrack;
 
@@ -27,6 +29,39 @@ export default function PlayerContent() {
 
   const showVideo = createMemo(() => {
     return initialized() && state.showContent() === "video";
+  });
+
+  const showVideoLong = createMemo(() => {
+    return initialized() && state.showContent() === "video-long";
+  });
+
+  createEffect(() => {
+    if (!initialized()) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      if (!AudioPlayer.playing || state.videoPlayer.playing) {
+        return;
+      }
+
+      const play =
+        lastVideoEnded() === null || lastVideoEnded() < Date.now() - 3500;
+
+      if (!play) {
+        return;
+      }
+
+      state.setShowContent("static");
+
+      setTimeout(() => {
+        state.setShowContent("video");
+      }, 500);
+    }, 10000);
+
+    onCleanup(() => {
+      clearInterval(interval);
+    });
   });
 
   onCleanup(() => {
@@ -54,23 +89,43 @@ export default function PlayerContent() {
     });
   });
 
-  const onVideoEnd = () => {
+  const onShortCameoEnd = () => {
     state.setShowContent("static");
     videoEnd = setTimeout(() => {
-      setCameo((cameo) => {
-        const nextCameo = cameo + 1;
-        const CAMEO_VIDS = 11;
+      setShortCameo((shortCameo) => {
+        const nextShortCameo = shortCameo + 1;
+        const SHORT_CAMEO_VIDS = 11;
 
-        if (nextCameo > CAMEO_VIDS) {
+        if (nextShortCameo > SHORT_CAMEO_VIDS) {
           return 1;
         }
 
-        return nextCameo;
+        return nextShortCameo;
       });
 
       state.setShowContent("audio");
       AudioPlayer.play();
       state.setVideoPlayer("playing", false);
+      setLastVideoEnded(Date.now());
+    }, 500);
+  };
+
+  const onLongCameoEnd = () => {
+    state.setShowContent("static");
+    videoEnd = setTimeout(() => {
+      setLongCameo((longCameo) => {
+        const nextLongCameo = longCameo + 1;
+        const LONG_CAMEO_VIDS = 12;
+
+        if (nextLongCameo > LONG_CAMEO_VIDS) {
+          return 1;
+        }
+
+        return nextLongCameo;
+      });
+
+      state.setShowContent("video-long");
+      setLastVideoEnded(Date.now());
     }, 500);
   };
 
@@ -90,7 +145,7 @@ export default function PlayerContent() {
             [styles.static]: true,
             [styles.on]: !initialized() || state.showContent() === "static",
           }}
-          src={`/videos/fx/crt-${crt()}.mp4`}
+          src={`${CDN_URL}/videos/fx/crt-${crt()}.mp4`}
           autoplay
           playsinline
           muted
@@ -100,7 +155,7 @@ export default function PlayerContent() {
           fallback={
             <video
               class={styles.static}
-              src={`/videos/fx/crt-${crt()}.mp4`}
+              src={`${CDN_URL}/videos/fx/crt-${crt()}.mp4`}
               autoplay
               playsinline
               muted
@@ -111,11 +166,22 @@ export default function PlayerContent() {
           <Match when={showVideo()}>
             <div class={styles.video}>
               <video
-                src={`/videos/cameos/short/${cameo()}.mp4`}
+                src={`${CDN_URL}/videos/short/${shortCameo()}.mp4`}
                 autoplay
                 playsinline
                 onPlay={onVideoStart}
-                onEnded={onVideoEnd}
+                onEnded={onShortCameoEnd}
+              />
+            </div>
+          </Match>
+          <Match when={showVideoLong()}>
+            <div class={styles.video}>
+              <video
+                src={`${CDN_URL}/videos/long/${longCameo()}.mp4`}
+                autoplay
+                playsinline
+                onPlay={onVideoStart}
+                onEnded={onLongCameoEnd}
               />
             </div>
           </Match>

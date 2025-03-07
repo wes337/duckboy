@@ -35,7 +35,7 @@ const getChannel = () => {
   return "None";
 };
 
-const [showContent, setShowContent] = createSignal("video");
+const [showContent, setShowContent] = createSignal("audio");
 
 export default {
   introDone,

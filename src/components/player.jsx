@@ -13,9 +13,10 @@ import styles from "./player.module.css";
 export default function Player() {
   const [initialized, setInitialized] = createSignal(false);
   const [highlightDuck, setHighlightDuck] = createSignal(false);
+  const [duckButtonClicked, setDuckButtonClicked] = createSignal(false);
 
   createEffect(async () => {
-    if (!initialized() || state.duckHunt()) {
+    if (!initialized() || state.duckHunt() || duckButtonClicked()) {
       return;
     }
 
@@ -62,9 +63,11 @@ export default function Player() {
     }
 
     setInitialized(true);
+    AudioPlayer.play();
   });
 
-  const onClickDuckButton = (event) => {
+  const onClickDuckButton = () => {
+    setDuckButtonClicked(true);
     playSoundEffect("duck.mp3");
     state.setDuckHunt(true);
   };

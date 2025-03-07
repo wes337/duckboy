@@ -109,25 +109,13 @@
 
 .main {
   position: absolute;
-
   width: calc(490 / 1231 * 100%);
   height: calc(610 / 1288 * 100%);
-
   top: 28.5%;
   left: 30%;
-
   border-radius: 4px;
   background-color: black;
   outline: 0.2rem ridge rgba(128, 128, 128, 0.25);
-}
-
-.main .static {
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  border-radius: 4px;
-  opacity: 0.5;
-  pointer-events: none;
 }
 
 .channel {
@@ -151,6 +139,12 @@
 }
 
 @media screen and (max-width: 500px) {
+  .channel {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-height: 700px) {
   .channel {
     font-size: 1rem;
   }
