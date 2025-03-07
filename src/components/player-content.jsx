@@ -131,15 +131,17 @@ export default function PlayerContent() {
   const onVideoStart = () => {
     const volume = AudioPlayer.volume;
 
-    // const shortCameoVideo = document.getElementById("short-cameo");
-    // if (shortCameoVideo) {
-    //   shortCameoVideo.volume = volume;
-    // }
+    const shortCameoVideo = document.getElementById("short-cameo");
+    if (shortCameoVideo) {
+      shortCameoVideo.volume = volume;
+      shortCameoVideo.play();
+    }
 
-    // const longCameoVideo = document.getElementById("long-cameo");
-    // if (longCameoVideo) {
-    //   longCameoVideo.volume = volume;
-    // }
+    const longCameoVideo = document.getElementById("long-cameo");
+    if (longCameoVideo) {
+      longCameoVideo.volume = volume;
+      shortCameoVideo.play();
+    }
 
     state.setVideoPlayer("playing", true);
     AudioPlayer.pause();
