@@ -175,7 +175,6 @@ export default function PlayerContent() {
             <div class={styles.video}>
               <video
                 id="short-cameo"
-                ref={video}
                 src={`${CDN_URL}/videos/short/${shortCameo()}.mp4`}
                 autoplay
                 playsinline
