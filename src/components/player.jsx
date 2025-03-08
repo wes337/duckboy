@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onCleanup, onMount } from "solid-js";
+import { createEffect, createSignal, onCleanup, Show } from "solid-js";
 import { playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
@@ -108,7 +108,21 @@ export default function Player() {
           <img src={`/player/duck-pressed.png`} />
         </button>
         <div class={styles.channel}>
-          <div>{state.getChannel()}</div>
+          <Show when={state.getChannel() !== "None"}>
+            <img
+              src={`/images/${
+                state.getChannel() === "Music" ? "music" : "cherry"
+              }-icon.png`}
+            />
+          </Show>
+          <div class={styles.label}>{state.getChannel()}</div>
+          <Show when={state.getChannel() !== "None"}>
+            <img
+              src={`/images/${
+                state.getChannel() === "Music" ? "music" : "cherry"
+              }-icon.png`}
+            />
+          </Show>
         </div>
       </div>
       <PlayerIntro />

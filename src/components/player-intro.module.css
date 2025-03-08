@@ -45,7 +45,7 @@
 }
 
 .playerIntro button:active,
-.playerIntro button:focus {
+.playerIntro button:focus-visible {
   animation: none;
   transform: scale(1.5);
 }

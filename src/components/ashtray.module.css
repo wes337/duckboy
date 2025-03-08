@@ -20,7 +20,7 @@
   height: 100%;
   width: auto;
   filter: drop-shadow(0px 0px 4px black);
-  will-change: right;
+  user-select: none !important;
 }
 
 @media screen and (max-width: 500px) {

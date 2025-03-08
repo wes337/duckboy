@@ -33,7 +33,6 @@
   width: 19%;
   z-index: -1;
   transform: scale(1);
-  will-change: transform;
   transition: transform 0.05s ease;
 }
 
@@ -44,7 +43,6 @@
   width: 19%;
   z-index: -1;
   transform: scale(1);
-  will-change: transform;
   transition: transform 0.05s ease;
 }
 
@@ -75,7 +73,7 @@
   height: calc(114 / 1288 * 100%);
 
   bottom: 3.25%;
-  right: 20.75%;
+  right: 20.8%;
 }
 
 .duckButton img {
@@ -138,9 +136,25 @@
   opacity: 0.5;
 }
 
+.channel img {
+  height: 1.5rem;
+}
+
+.channel .label {
+  width: 100px;
+}
+
 @media screen and (max-width: 500px) {
   .channel {
     font-size: 1rem;
+  }
+
+  .channel .label {
+    width: 80px;
+  }
+
+  .channel img {
+    height: 0.75rem;
   }
 }
 

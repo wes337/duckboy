@@ -83,9 +83,9 @@ export default function PlayerContent() {
       if (longCameoVideo) {
         longCameoVideo.pause();
       }
-    }
 
-    console.log(state.showContent());
+      state.setVideoPlayer("playing", false);
+    }
   });
 
   createEffect(() => {
@@ -142,50 +142,46 @@ export default function PlayerContent() {
     });
   });
 
-  const onShortCameoEnd = () => {
-    if (state.showContent() !== "video") {
+  const onEnded = () => {
+    if (!state.showContent().match(/video/gi)) {
       return;
     }
 
-    state.setShowContent("static");
-    videoEnd = setTimeout(() => {
-      setShortCameo((shortCameo) => {
-        const nextShortCameo = shortCameo + 1;
-        const SHORT_CAMEO_VIDS = 11;
-
-        if (nextShortCameo > SHORT_CAMEO_VIDS) {
-          return 1;
-        }
-
-        return nextShortCameo;
-      });
-
-      state.setShowContent("audio");
-      AudioPlayer.play();
-      state.setVideoPlayer("playing", false);
-      setLastVideoEnded(Date.now());
-    }, 500);
-  };
-
-  const onLongCameoEnd = () => {
-    if (state.showContent() !== "video-long") {
-      return;
-    }
+    const nextContent =
+      state.showContent() === "video" ? "audio" : "video-long";
 
     state.setShowContent("static");
     videoEnd = setTimeout(() => {
-      setLongCameo((longCameo) => {
-        const nextLongCameo = longCameo + 1;
-        const LONG_CAMEO_VIDS = 12;
+      if (nextContent === "video-long") {
+        setLongCameo((longCameo) => {
+          const nextLongCameo = longCameo + 1;
+          const LONG_CAMEO_VIDS = 12;
 
-        if (nextLongCameo > LONG_CAMEO_VIDS) {
-          return 1;
-        }
+          if (nextLongCameo > LONG_CAMEO_VIDS) {
+            return 1;
+          }
 
-        return nextLongCameo;
-      });
+          return nextLongCameo;
+        });
+      } else {
+        setShortCameo((shortCameo) => {
+          const nextShortCameo = shortCameo + 1;
+          const SHORT_CAMEO_VIDS = 11;
 
-      state.setShowContent("video-long");
+          if (nextShortCameo > SHORT_CAMEO_VIDS) {
+            return 1;
+          }
+
+          return nextShortCameo;
+        });
+      }
+
+      state.setShowContent(nextContent);
+
+      if (nextContent === "audio") {
+        AudioPlayer.play();
+      }
+
       setLastVideoEnded(Date.now());
     }, 500);
   };
@@ -216,7 +212,7 @@ export default function PlayerContent() {
               id="short-cameo"
               src={`${CDN_URL}/videos/short/${shortCameo()}.mp4`}
               playsinline
-              onEnded={onShortCameoEnd}
+              onEnded={onEnded}
               muted
             />
           </div>
@@ -232,7 +228,7 @@ export default function PlayerContent() {
               id="long-cameo"
               src={`${CDN_URL}/videos/long/${longCameo()}.mp4`}
               playsinline
-              onEnded={onLongCameoEnd}
+              onEnded={onEnded}
               muted
             />
           </div>

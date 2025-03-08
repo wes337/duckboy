@@ -26,7 +26,6 @@
   user-select: none;
   pointer-events: none;
   filter: drop-shadow(2px 2px 2px black);
-  will-change: filter;
 }
 
 .deadDuck {

@@ -186,15 +186,14 @@ export default class AudioPlayer {
     const [store, setStore] = AudioPlayer.store;
 
     return {
-      onseek: (v) => {
-        console.log(v);
-      },
       onplay: (id) => setStore("playing", id),
       onpause: () => setStore("playing", null),
       onend: (id) => {
-        if (store.playing === id) {
-          setStore("playing", null);
+        if (store.playing !== id) {
+          return;
         }
+
+        AudioPlayer.next();
       },
     };
   }

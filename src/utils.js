@@ -1,30 +1,21 @@
+import { Howl } from "howler";
+
 export const CDN_URL = "https://w-img.b-cdn.net/duckboy";
 
 export const playSoundEffect = (soundEffect, quiet) => {
   return new Promise((resolve) => {
     try {
       const url = `${CDN_URL}/sounds/${soundEffect}`;
-      const audio = new Audio(url);
 
-      audio.volume = quiet ? 0.5 : 0.75;
-
-      const playPromise = audio.play().catch(() => {
-        // Do nothing
-        resolve();
+      const sound = new Howl({
+        src: [url],
+        volume: quiet ? 0.5 : 1,
+        onend: () => {
+          resolve();
+        },
       });
 
-      if (playPromise !== undefined) {
-        audio
-          .play()
-          .then(() => {
-            audio.remove();
-            resolve();
-          })
-          .catch(() => {
-            // Do nothing
-            resolve();
-          });
-      }
+      sound.play();
     } catch {
       // Do nothing
       resolve();
