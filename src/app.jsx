@@ -10,25 +10,25 @@ function App() {
   onMount(async () => {
     AudioPlayer.init();
 
-    const CRT = 12;
-    const SHORT_CAMEO = 11;
-    const LONG_CAMEO = 12;
+    // const CRT = 12;
+    // const SHORT_CAMEO = 11;
+    // const LONG_CAMEO = 12;
 
-    const videosToPreload = [];
+    // const videosToPreload = [];
 
-    for (let i = 1; i <= CRT; i++) {
-      videosToPreload.push(`${CDN_URL}/videos/fx/crt-${i}.mp4`);
-    }
+    // for (let i = 1; i <= CRT; i++) {
+    //   videosToPreload.push(`${CDN_URL}/videos/fx/crt-${i}.mp4`);
+    // }
 
-    for (let i = 1; i <= SHORT_CAMEO; i++) {
-      videosToPreload.push(`${CDN_URL}/videos/short/${i}.mp4`);
-    }
+    // for (let i = 1; i <= SHORT_CAMEO; i++) {
+    //   videosToPreload.push(`${CDN_URL}/videos/short/${i}.mp4`);
+    // }
 
-    for (let i = 1; i <= LONG_CAMEO; i++) {
-      videosToPreload.push(`${CDN_URL}/videos/long/${i}.mp4`);
-    }
+    // for (let i = 1; i <= LONG_CAMEO; i++) {
+    //   videosToPreload.push(`${CDN_URL}/videos/long/${i}.mp4`);
+    // }
 
-    await preloadVideos(videosToPreload);
+    // await preloadVideos(videosToPreload);
   });
 
   onCleanup(() => {
