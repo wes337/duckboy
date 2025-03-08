@@ -1,10 +1,4 @@
-import {
-  createMemo,
-  createSignal,
-  createEffect,
-  onCleanup,
-  Switch,
-} from "solid-js";
+import { createMemo, createSignal, createEffect, onCleanup } from "solid-js";
 import { CDN_URL, playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
@@ -32,6 +26,66 @@ export default function PlayerContent() {
 
   const showVideoLong = createMemo(() => {
     return initialized() && state.showContent() === "video-long";
+  });
+
+  createEffect(() => {
+    if (!initialized()) {
+      return;
+    }
+
+    if (state.showContent() === "video") {
+      const volume = AudioPlayer.volume;
+
+      const shortCameoVideo = document.getElementById("short-cameo");
+      if (shortCameoVideo) {
+        shortCameoVideo
+          .play()
+          .then(() => {
+            shortCameoVideo.volume = volume;
+            shortCameoVideo.muted = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      AudioPlayer.pause();
+      state.setVideoPlayer("playing", true);
+    }
+
+    if (state.showContent() === "video-long") {
+      const volume = AudioPlayer.volume;
+
+      const longCameoVideo = document.getElementById("long-cameo");
+      if (longCameoVideo) {
+        longCameoVideo
+          .play()
+          .then(() => {
+            longCameoVideo.volume = volume;
+            longCameoVideo.muted = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      AudioPlayer.pause();
+      state.setVideoPlayer("playing", true);
+    }
+
+    if (state.showContent() === "audio") {
+      const shortCameoVideo = document.getElementById("short-cameo");
+      if (shortCameoVideo) {
+        shortCameoVideo.pause();
+      }
+
+      const longCameoVideo = document.getElementById("long-cameo");
+      if (longCameoVideo) {
+        longCameoVideo.pause();
+      }
+    }
+
+    console.log(state.showContent());
   });
 
   createEffect(() => {
@@ -89,6 +143,10 @@ export default function PlayerContent() {
   });
 
   const onShortCameoEnd = () => {
+    if (state.showContent() !== "video") {
+      return;
+    }
+
     state.setShowContent("static");
     videoEnd = setTimeout(() => {
       setShortCameo((shortCameo) => {
@@ -110,6 +168,10 @@ export default function PlayerContent() {
   };
 
   const onLongCameoEnd = () => {
+    if (state.showContent() !== "video-long") {
+      return;
+    }
+
     state.setShowContent("static");
     videoEnd = setTimeout(() => {
       setLongCameo((longCameo) => {
@@ -128,25 +190,6 @@ export default function PlayerContent() {
     }, 500);
   };
 
-  const onVideoStart = () => {
-    const volume = AudioPlayer.volume;
-
-    const shortCameoVideo = document.getElementById("short-cameo");
-    if (shortCameoVideo) {
-      shortCameoVideo.volume = volume;
-      shortCameoVideo.play();
-    }
-
-    const longCameoVideo = document.getElementById("long-cameo");
-    if (longCameoVideo) {
-      longCameoVideo.volume = volume;
-      shortCameoVideo.play();
-    }
-
-    state.setVideoPlayer("playing", true);
-    AudioPlayer.pause();
-  };
-
   return (
     <>
       <div class={styles.playerContent}>
@@ -161,86 +204,77 @@ export default function PlayerContent() {
           muted
           loop
         />
-        <Switch
-          fallback={
-            <video
-              class={styles.static}
-              src={`${CDN_URL}/videos/fx/crt-${crt()}.mp4`}
-              autoplay
-              playsinline
-              muted
-              loop
-            />
-          }
+
+        <div
+          classList={{
+            [styles.shortCameo]: true,
+            [styles.show]: showVideo(),
+          }}
         >
-          <Match when={showVideo()}>
-            <div class={styles.video}>
-              <video
-                id="short-cameo"
-                src={`${CDN_URL}/videos/short/${shortCameo()}.mp4`}
-                autoplay
-                playsinline
-                onPlay={onVideoStart}
-                onEnded={onShortCameoEnd}
-              />
+          <div class={styles.video}>
+            <video
+              id="short-cameo"
+              src={`${CDN_URL}/videos/short/${shortCameo()}.mp4`}
+              playsinline
+              onEnded={onShortCameoEnd}
+              muted
+            />
+          </div>
+        </div>
+        <div
+          classList={{
+            [styles.longCameo]: true,
+            [styles.show]: showVideoLong(),
+          }}
+        >
+          <div class={styles.video}>
+            <video
+              id="long-cameo"
+              src={`${CDN_URL}/videos/long/${longCameo()}.mp4`}
+              playsinline
+              onEnded={onLongCameoEnd}
+              muted
+            />
+          </div>
+        </div>
+        <div classList={{ [styles.audio]: true, [styles.show]: showAudio() }}>
+          <div class={styles.inner}>
+            <img class={styles.borderTop} src={`/patterns/gold-border-y.png`} />
+            <img
+              class={styles.borderBottom}
+              src={`/patterns/gold-border-y.png`}
+            />
+            <img
+              class={styles.borderLeft}
+              src={`/patterns/gold-border-x.png`}
+            />
+            <img
+              class={styles.borderRight}
+              src={`/patterns/gold-border-x.png`}
+            />
+            <div class={styles.cover}>
+              <img src={currentTrack().cover} />
             </div>
-          </Match>
-          <Match when={showVideoLong()}>
-            <div class={styles.video}>
-              <video
-                id="long-cameo"
-                src={`${CDN_URL}/videos/long/${longCameo()}.mp4`}
-                autoplay
-                playsinline
-                onPlay={onVideoStart}
-                onEnded={onLongCameoEnd}
-              />
-            </div>
-          </Match>
-          <Match when={showAudio()}>
-            <div class={styles.audio}>
-              <div class={styles.inner}>
+            <div class={styles.details}>
+              <div class={styles.artist}>{currentTrack().artist}</div>
+              <div class={styles.name}>
+                <marquee>{currentTrack().name}</marquee>
+              </div>
+              <div class={styles.seek}>
+                <img class={styles.bar} src={`/player/seek-bar.png`} />
                 <img
-                  class={styles.borderTop}
-                  src={`/patterns/gold-border-y.png`}
+                  class={styles.knob}
+                  src={`/player/seek-knob.png`}
+                  style={{ left: `${AudioPlayer.seek}%` }}
                 />
-                <img
-                  class={styles.borderBottom}
-                  src={`/patterns/gold-border-y.png`}
-                />
-                <img
-                  class={styles.borderLeft}
-                  src={`/patterns/gold-border-x.png`}
-                />
-                <img
-                  class={styles.borderRight}
-                  src={`/patterns/gold-border-x.png`}
-                />
-                <div class={styles.cover}>
-                  <img src={currentTrack().cover} />
-                </div>
-                <div class={styles.details}>
-                  <div class={styles.artist}>{currentTrack().artist}</div>
-                  <div class={styles.name}>
-                    <marquee>{currentTrack().name}</marquee>
-                  </div>
-                  <div class={styles.seek}>
-                    <img class={styles.bar} src={`/player/seek-bar.png`} />
-                    <img
-                      class={styles.knob}
-                      src={`/player/seek-knob.png`}
-                      style={{ left: `${AudioPlayer.seek}%` }}
-                    />
-                  </div>
-                  <div class={styles.duration}>
-                    <div>{AudioPlayer.currentTime}</div>/
-                    <div>{AudioPlayer.duration}</div>
-                  </div>
-                </div>
+              </div>
+              <div class={styles.duration}>
+                <div>{AudioPlayer.currentTime}</div>/
+                <div>{AudioPlayer.duration}</div>
               </div>
             </div>
-          </Match>
-        </Switch>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -42,6 +42,20 @@
   background-color: #222222;
 }
 
+.playerContent .shortCameo,
+.playerContent .longCameo {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.playerContent .shortCameo.show,
+.playerContent .longCameo.show {
+  opacity: 1;
+}
+
 .playerContent .audio .borderTop {
   position: absolute;
   width: calc(100% - (var(--player-padding) / 2));

@@ -29,6 +29,31 @@ function App() {
     // }
 
     // await preloadVideos(videosToPreload);
+
+    onMount(() => {
+      const handleUserInteraction = () => {
+        const volume = AudioPlayer.volume;
+        const shortCameoVideo = document.getElementById("short-cameo");
+        if (shortCameoVideo && shortCameoVideo.muted) {
+          shortCameoVideo.muted = false;
+          shortCameoVideo.volume = volume;
+        }
+
+        const longCameoVideo = document.getElementById("long-cameo");
+        if (longCameoVideo && longCameoVideo.muted) {
+          longCameoVideo.muted = false;
+          longCameoVideo.volume = volume;
+        }
+      };
+
+      document.addEventListener("click", handleUserInteraction);
+      document.addEventListener("touchend", handleUserInteraction);
+
+      onCleanup(() => {
+        document.removeEventListener("click", handleUserInteraction);
+        document.removeEventListener("touchend", handleUserInteraction);
+      });
+    });
   });
 
   onCleanup(() => {
