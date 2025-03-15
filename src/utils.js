@@ -1,21 +1,30 @@
-import { Howl } from "howler";
-
-export const CDN_URL = "https://w-img.b-cdn.net/duckboy";
+import { CDN_URL } from "./constants";
 
 export const playSoundEffect = (soundEffect, quiet) => {
   return new Promise((resolve) => {
     try {
       const url = `${CDN_URL}/sounds/${soundEffect}`;
+      const audio = new Audio(url);
+      audio.volume = quiet ? 0.75 : 1;
 
-      const sound = new Howl({
-        src: [url],
-        volume: quiet ? 0.5 : 1,
-        onend: () => {
-          resolve();
-        },
+      const playPromise = audio.play().catch(() => {
+        // Do nothing
+        resolve();
       });
 
-      sound.play();
+      if (playPromise !== undefined) {
+        audio
+          .play()
+          .then(() => {
+            audio.remove();
+            resolve();
+          })
+
+          .catch(() => {
+            // Do nothing
+            resolve();
+          });
+      }
     } catch {
       // Do nothing
       resolve();
@@ -26,6 +35,10 @@ export const playSoundEffect = (soundEffect, quiet) => {
 export const randomNumberBetween = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+export function randomElementFromArray(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
 
 export const calculateTime = (seconds) => {
   try {

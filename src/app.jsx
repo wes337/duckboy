@@ -1,5 +1,5 @@
 import { onMount, onCleanup } from "solid-js";
-import { CDN_URL, preloadVideos } from "./utils";
+// import { CDN_URL, preloadVideos } from "./utils";
 import AudioPlayer from "./audio-player";
 import Player from "./components/player";
 import DuckHunt from "./components/duck-hunt";
@@ -33,6 +33,7 @@ function App() {
     onMount(() => {
       const handleUserInteraction = () => {
         const volume = AudioPlayer.volume;
+
         const shortCameoVideo = document.getElementById("short-cameo");
         if (shortCameoVideo && shortCameoVideo.muted) {
           shortCameoVideo.muted = false;

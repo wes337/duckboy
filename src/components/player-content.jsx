@@ -1,5 +1,6 @@
 import { createMemo, createSignal, createEffect, onCleanup } from "solid-js";
-import { CDN_URL, playSoundEffect } from "../utils";
+import { CDN_URL, ALBUMS } from "../constants";
+import { playSoundEffect, randomElementFromArray } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
 import styles from "./player-content.module.css";
@@ -99,7 +100,7 @@ export default function PlayerContent() {
       }
 
       const play =
-        lastVideoEnded() === null || lastVideoEnded() < Date.now() - 3500;
+        lastVideoEnded() === null || lastVideoEnded() < Date.now() - 20000;
 
       if (!play) {
         return;
@@ -110,7 +111,7 @@ export default function PlayerContent() {
       setTimeout(() => {
         state.setShowContent("video");
       }, 500);
-    }, 10000);
+    }, 20000);
 
     onCleanup(() => {
       clearInterval(interval);
@@ -186,6 +187,20 @@ export default function PlayerContent() {
     }, 500);
   };
 
+  const bumper = createMemo(() => {
+    if (!currentTrack()) {
+      return null;
+    }
+
+    const bumpers = ALBUMS[currentTrack().album]?.bumpers || [];
+
+    if (bumpers.length === 0) {
+      return null;
+    }
+
+    return randomElementFromArray(bumpers);
+  });
+
   return (
     <>
       <div class={styles.playerContent}>
@@ -235,6 +250,11 @@ export default function PlayerContent() {
         </div>
         <div classList={{ [styles.audio]: true, [styles.show]: showAudio() }}>
           <div class={styles.inner}>
+            {bumper() && (
+              <div class={styles.art}>
+                <video src={bumper()} autoplay muted loop playsinline />
+              </div>
+            )}
             <img class={styles.borderTop} src={`/patterns/gold-border-y.png`} />
             <img
               class={styles.borderBottom}
@@ -249,10 +269,10 @@ export default function PlayerContent() {
               src={`/patterns/gold-border-x.png`}
             />
             <div class={styles.cover}>
-              <img src={currentTrack().cover} />
+              <img src={ALBUMS[currentTrack().album].cover} />
             </div>
             <div class={styles.details}>
-              <div class={styles.artist}>{currentTrack().artist}</div>
+              <div class={styles.artist}>DUCKBOY</div>
               <div class={styles.name}>
                 <marquee>{currentTrack().name}</marquee>
               </div>

@@ -137,7 +137,8 @@
 }
 
 .channel img {
-  height: 1.5rem;
+  height: 75%;
+  width: auto;
 }
 
 .channel .label {
@@ -151,10 +152,6 @@
 
   .channel .label {
     width: 80px;
-  }
-
-  .channel img {
-    height: 0.75rem;
   }
 }
 

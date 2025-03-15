@@ -1,22 +1,41 @@
-import { Howl, Howler } from "howler";
 import { createStore } from "solid-js/store";
-import { CDN_URL, calculateTime } from "./utils";
+import { Howl, Howler } from "howler";
+import { CDN_URL } from "./constants";
+import { calculateTime } from "./utils";
 
 export default class AudioPlayer {
   static tracks = [
     {
-      artist: "DUCKBOY",
-      name: "EXCALIBUR",
-      cover: `${CDN_URL}/images/album/hymns.jpg`,
-      url: `${CDN_URL}/music/EXCALIBUR.mp3`,
+      name: "after further reasoning, i'm going to bed",
+      album: "tragic",
+      url: `${CDN_URL}/music/${encodeURIComponent(
+        "after further reasoning, i'm going to bed"
+      )}.mp3`,
     },
     {
-      artist: "DUCKBOY",
       name: "my love life needs a lobotomy",
-      cover: `${CDN_URL}/images/album/tragic.jpg`,
+      album: "tragic",
       url: `${CDN_URL}/music/${encodeURIComponent(
         "my love life needs a lobotomy"
       )}.mp3`,
+    },
+    {
+      name: "ROUGAROU (i've become the monster)",
+      album: "tragic",
+      url: `${CDN_URL}/music/${encodeURIComponent(
+        "ROUGAROU (i've become the monster)"
+      )}.mp3`,
+    },
+    {
+      name: "XXL Hadron Collider",
+      album: "tragic",
+      url: `${CDN_URL}/music/${encodeURIComponent("XXL Hadron Collider")}.mp3`,
+    },
+
+    {
+      name: "EXCALIBUR",
+      album: "hymns",
+      url: `${CDN_URL}/music/EXCALIBUR.mp3`,
     },
   ];
 
