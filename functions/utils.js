@@ -1,5 +1,5 @@
 export const CFP_COOKIE_KEY = "CFP-Auth-Key";
-export const CFP_COOKIE_MAX_AGE = 60;
+export const CFP_COOKIE_MAX_AGE = 60 * 60;
 export const CFP_ALLOWED_PATHS = ["/cfp_login"];
 
 export async function sha256(str) {
