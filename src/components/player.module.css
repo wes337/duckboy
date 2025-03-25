@@ -64,6 +64,12 @@
   }
 }
 
+@media screen and (max-width: 414px) {
+  .player {
+    translate: 0 -10%;
+  }
+}
+
 .duckButton {
   all: unset;
   cursor: pointer;
