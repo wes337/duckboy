@@ -4,7 +4,9 @@ import AudioPlayer from "./audio-player";
 import Player from "./components/player";
 import DuckHunt from "./components/duck-hunt";
 import Footer from "./components/footer";
+import SocialMediaLinks from "./components/social-media-links";
 import styles from "./app.module.css";
+import Sign from "./components/sign";
 
 function App() {
   onMount(async () => {
@@ -63,9 +65,11 @@ function App() {
 
   return (
     <div class={styles.app}>
+      <Sign />
       <Player />
       <Footer />
       <DuckHunt />
+      <SocialMediaLinks />
     </div>
   );
 }

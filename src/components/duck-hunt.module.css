@@ -1,8 +1,8 @@
 .gun {
   position: fixed;
-  bottom: -5%;
-  right: 25%;
-  width: 300px;
+  bottom: -10%;
+  right: 0;
+  width: 20vw;
   height: auto;
   z-index: 10;
   opacity: 0;

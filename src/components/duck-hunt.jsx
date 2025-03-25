@@ -109,7 +109,7 @@ export default function DuckHunt() {
     const interval = setInterval(() => {
       spawnDuck();
 
-      if (ducksFlown >= 20) {
+      if (ducksFlown >= 10) {
         clearInterval(interval);
         state.setDuckHunt(false);
       }
