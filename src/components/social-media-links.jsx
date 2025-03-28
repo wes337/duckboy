@@ -3,7 +3,7 @@ import styles from "./social-media-links.module.css";
 
 const links = [
   { name: "youtube", href: "https://www.youtube.com/@whereyatduckboy" },
-  { name: "ig", href: "https://www.instagram.com/suicideleopard/?hl=en" },
+  { name: "ig", href: "https://www.instagram.com/whereyatduckboy" },
   {
     name: "spotify",
     href: "https://open.spotify.com/artist/7LcRxOTDhbQ19ulgIVOWpu",

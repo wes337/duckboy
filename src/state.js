@@ -11,6 +11,7 @@ const [scenes, setScenes] = createStore(SCENES);
 
 const [videoPlayer, setVideoPlayer] = createStore({
   playing: false,
+  paused: false,
 });
 
 const sceneDone = (scene) => {

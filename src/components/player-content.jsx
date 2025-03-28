@@ -5,13 +5,50 @@ import AudioPlayer from "../audio-player";
 import state from "../state";
 import styles from "./player-content.module.css";
 
+const [crt, setCRT] = createSignal(3);
+const [shortCameo, setShortCameo] = createSignal(1);
+const [longCameo, setLongCameo] = createSignal(1);
+
+export const gotoNextLongCameo = () => {
+  state.setShowContent("static");
+
+  setTimeout(() => {
+    state.setShowContent("video-long");
+  }, 500);
+
+  setLongCameo((longCameo) => {
+    const nextLongCameo = longCameo + 1;
+    const LONG_CAMEO_VIDS = 12;
+
+    if (nextLongCameo > LONG_CAMEO_VIDS) {
+      return 1;
+    }
+
+    return nextLongCameo;
+  });
+};
+
+export const gotoPreviousLongCameo = () => {
+  state.setShowContent("static");
+
+  setTimeout(() => {
+    state.setShowContent("video-long");
+  }, 500);
+
+  setLongCameo((longCameo) => {
+    const previousLongCameo = longCameo - 1;
+    const LONG_CAMEO_VIDS = 12;
+
+    if (previousLongCameo < 0) {
+      return LONG_CAMEO_VIDS - 1;
+    }
+
+    return previousLongCameo;
+  });
+};
+
 export default function PlayerContent() {
   const initialized = () => state.sceneDone("intro");
-
-  const [crt, setCRT] = createSignal(3);
-  const [shortCameo, setShortCameo] = createSignal(1);
-  const [longCameo, setLongCameo] = createSignal(1);
-  const [lastVideoEnded, setLastVideoEnded] = createSignal(null);
 
   const currentTrack = () => AudioPlayer.currentTrack;
 
@@ -89,34 +126,34 @@ export default function PlayerContent() {
     }
   });
 
-  createEffect(() => {
-    if (!initialized()) {
-      return;
-    }
+  // createEffect(() => {
+  //   if (!initialized()) {
+  //     return;
+  //   }
 
-    const interval = setInterval(() => {
-      if (!AudioPlayer.playing || state.videoPlayer.playing) {
-        return;
-      }
+  //   const interval = setInterval(() => {
+  //     if (!AudioPlayer.playing || state.videoPlayer.playing) {
+  //       return;
+  //     }
 
-      const play =
-        lastVideoEnded() === null || lastVideoEnded() < Date.now() - 20000;
+  //     const play =
+  //       lastVideoEnded() === null || lastVideoEnded() < Date.now() - 20000;
 
-      if (!play) {
-        return;
-      }
+  //     if (!play) {
+  //       return;
+  //     }
 
-      state.setShowContent("static");
+  //     state.setShowContent("static");
 
-      setTimeout(() => {
-        state.setShowContent("video");
-      }, 500);
-    }, 20000);
+  //     setTimeout(() => {
+  //       state.setShowContent("video");
+  //     }, 500);
+  //   }, 20000);
 
-    onCleanup(() => {
-      clearInterval(interval);
-    });
-  });
+  //   onCleanup(() => {
+  //     clearInterval(interval);
+  //   });
+  // });
 
   onCleanup(() => {
     if (videoEnd) {
@@ -154,16 +191,7 @@ export default function PlayerContent() {
     state.setShowContent("static");
     videoEnd = setTimeout(() => {
       if (nextContent === "video-long") {
-        setLongCameo((longCameo) => {
-          const nextLongCameo = longCameo + 1;
-          const LONG_CAMEO_VIDS = 12;
-
-          if (nextLongCameo > LONG_CAMEO_VIDS) {
-            return 1;
-          }
-
-          return nextLongCameo;
-        });
+        gotoNextLongCameo();
       } else {
         setShortCameo((shortCameo) => {
           const nextShortCameo = shortCameo + 1;
@@ -182,8 +210,6 @@ export default function PlayerContent() {
       if (nextContent === "audio") {
         AudioPlayer.play();
       }
-
-      setLastVideoEnded(Date.now());
     }, 500);
   };
 

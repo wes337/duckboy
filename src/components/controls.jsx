@@ -2,10 +2,17 @@ import { playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
 import styles from "./controls.module.css";
+import { gotoNextLongCameo, gotoPreviousLongCameo } from "./player-content";
 
 export default function Controls() {
   const onClickPlay = () => {
-    if (AudioPlayer.playing || state.videoPlayer.playing) {
+    if (state.videoPlayer.playing) {
+      document.getElementById("long-cameo")?.play();
+      state.setVideoPlayer("paused", false);
+      return;
+    }
+
+    if (AudioPlayer.playing) {
       return;
     }
 
@@ -14,25 +21,39 @@ export default function Controls() {
   };
 
   const onClickRewind = () => {
+    playSoundEffect("click-hard.mp3");
+
     if (state.videoPlayer.playing) {
+      gotoPreviousLongCameo();
+      document.getElementById("long-cameo")?.play();
+      state.setVideoPlayer("paused", false);
       return;
     }
 
-    playSoundEffect("click-hard.mp3");
     AudioPlayer.previous();
   };
 
   const onClickFastForward = () => {
+    playSoundEffect("click-hard.mp3");
+
     if (state.videoPlayer.playing) {
+      gotoNextLongCameo();
+      document.getElementById("long-cameo")?.play();
+      state.setVideoPlayer("paused", false);
       return;
     }
 
-    playSoundEffect("click-hard.mp3");
     AudioPlayer.next();
   };
 
   const onClickStop = () => {
-    if (!AudioPlayer.playing || state.videoPlayer.playing) {
+    if (state.videoPlayer.playing) {
+      document.getElementById("long-cameo")?.pause();
+      state.setVideoPlayer("paused", true);
+      return;
+    }
+
+    if (!AudioPlayer.playing) {
       return;
     }
 
@@ -47,7 +68,9 @@ export default function Controls() {
         <img
           classList={{
             [styles.pressed]: true,
-            [styles.on]: AudioPlayer.playing || state.videoPlayer.playing,
+            [styles.on]: state.videoPlayer.playing
+              ? !state.videoPlayer.paused
+              : AudioPlayer.playing,
           }}
           src="/player/play-pressed.png"
         />
@@ -57,7 +80,6 @@ export default function Controls() {
         <img
           classList={{
             [styles.pressed]: true,
-            [styles.on]: state.videoPlayer.playing,
           }}
           src="/player/rw-pressed.png"
         />
@@ -67,7 +89,6 @@ export default function Controls() {
         <img
           classList={{
             [styles.pressed]: true,
-            [styles.on]: state.videoPlayer.playing,
           }}
           src="/player/ff-pressed.png"
         />
@@ -77,7 +98,9 @@ export default function Controls() {
         <img
           classList={{
             [styles.pressed]: true,
-            [styles.on]: !AudioPlayer.playing,
+            [styles.on]: state.videoPlayer.playing
+              ? state.videoPlayer.paused
+              : !AudioPlayer.playing,
           }}
           src="/player/stop-pressed.png"
         />

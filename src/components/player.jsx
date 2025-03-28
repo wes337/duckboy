@@ -69,7 +69,12 @@ export default function Player() {
   const onClickDuckButton = () => {
     setDuckButtonClicked(true);
     playSoundEffect("duck.mp3");
-    state.setDuckHunt(true);
+
+    if (state.duckHunt()) {
+      state.setDuckHunt(false);
+    } else {
+      state.setDuckHunt(true);
+    }
   };
 
   return (

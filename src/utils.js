@@ -5,7 +5,7 @@ export const playSoundEffect = (soundEffect, quiet) => {
     try {
       const url = `${CDN_URL}/sounds/${soundEffect}`;
       const audio = new Audio(url);
-      audio.volume = quiet ? 0.75 : 1;
+      audio.volume = quiet ? 0.5 : 0.75;
 
       const playPromise = audio.play().catch(() => {
         // Do nothing
