@@ -7,6 +7,7 @@ import Footer from "./components/footer";
 import SocialMediaLinks from "./components/social-media-links";
 import Sign from "./components/sign";
 import Ads from "./components/ads";
+import Ducky from "./components/ducky";
 import Cursor from "./components/cursor";
 import Werewolves from "./components/werewolves";
 import styles from "./app.module.css";
@@ -74,6 +75,7 @@ function App() {
       <Player />
       <Footer />
       <DuckHunt />
+      <Ducky />
       <SocialMediaLinks />
       <Werewolves />
     </div>

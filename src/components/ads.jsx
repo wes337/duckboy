@@ -58,7 +58,8 @@ export default function Ads() {
       video.muted = true;
       video.autoplay = true;
       video.loop = true;
-      video.playsinline = true;
+      video.playsInline = true;
+      video.style.pointerEvents = "none";
       popUp.appendChild(video);
     }
 

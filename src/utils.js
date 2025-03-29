@@ -109,3 +109,25 @@ export async function preloadVideos(videoUrls) {
 
   await Promise.all(videoPromises);
 }
+
+export async function preloadImages(imageUrls) {
+  const imgPromises = imageUrls.map((url) => {
+    return new Promise((resolve, reject) => {
+      const img = document.createElement("img");
+
+      img.addEventListener("loadeddata", () => {
+        resolve(img);
+      });
+
+      img.addEventListener("error", (error) => {
+        reject(error);
+      });
+
+      img.preload = "auto";
+      img.src = url;
+      img.load();
+    });
+  });
+
+  await Promise.all(imgPromises);
+}

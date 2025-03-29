@@ -12,6 +12,7 @@ const [scenes, setScenes] = createStore(SCENES);
 const [duckHunt, setDuckHunt] = createSignal(false);
 const [ads, setAds] = createSignal(false);
 const [werewolves, setWerewolves] = createSignal(false);
+const [ducky, setDucky] = createSignal("");
 
 const [videoPlayer, setVideoPlayer] = createStore({
   playing: false,
@@ -62,4 +63,6 @@ export default {
   setShowContent,
   werewolves,
   setWerewolves,
+  ducky,
+  setDucky,
 };
