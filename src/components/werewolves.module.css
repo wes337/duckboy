@@ -1,0 +1,30 @@
+.werewolf {
+  position: fixed;
+  bottom: 0;
+  right: -50%;
+  animation: run 5s linear;
+}
+
+.werewolf img {
+  transform: scaleX(-1);
+  user-select: none;
+  pointer-events: none;
+  width: 512px;
+  height: 512px;
+}
+
+@keyframes run {
+  0% {
+    right: -50%;
+  }
+  100% {
+    right: 150%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .werewolf img {
+    width: 256px;
+    height: 256px;
+  }
+}

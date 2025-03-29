@@ -4,6 +4,8 @@ import { randomNumberBetween, playSoundEffect } from "../utils";
 import state from "../state";
 import styles from "./duck-hunt.module.css";
 
+const NUMBER_OF_DUCKS = 5;
+
 export default function DuckHunt() {
   const [shooting, setShooting] = createSignal(false);
 
@@ -109,7 +111,7 @@ export default function DuckHunt() {
     const interval = setInterval(() => {
       spawnDuck();
 
-      if (ducksFlown >= 5) {
+      if (ducksFlown >= NUMBER_OF_DUCKS) {
         clearInterval(interval);
 
         setTimeout(() => {

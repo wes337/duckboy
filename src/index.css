@@ -36,6 +36,10 @@ body {
   background-position: center;
 }
 
+body.hideCursor {
+  cursor: none;
+}
+
 body:before {
   content: "";
   top: 0;

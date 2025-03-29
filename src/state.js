@@ -5,9 +5,13 @@ import AudioPlayer from "./audio-player";
 
 const [introDone, setIntroDone] = createSignal(false);
 const [ashtrayOpen, setAshtrayOpen] = createSignal(false);
-const [duckHunt, setDuckHunt] = createSignal(false);
 
 const [scenes, setScenes] = createStore(SCENES);
+
+// Duck button events
+const [duckHunt, setDuckHunt] = createSignal(false);
+const [ads, setAds] = createSignal(false);
+const [werewolves, setWerewolves] = createSignal(false);
 
 const [videoPlayer, setVideoPlayer] = createStore({
   playing: false,
@@ -52,7 +56,10 @@ export default {
   getChannel,
   videoPlayer,
   setVideoPlayer,
-
+  ads,
+  setAds,
   showContent,
   setShowContent,
+  werewolves,
+  setWerewolves,
 };

@@ -1,0 +1,29 @@
+.popUp {
+  position: fixed;
+  display: flex;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.1s ease;
+}
+
+.popUp video,
+.popUp img {
+  width: 400px;
+  height: 216px;
+  object-fit: fill;
+  border-radius: 8px;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.75));
+}
+
+.popUp:hover,
+.popUp:hover {
+  transform: scale(1.1);
+}
+
+@media screen and (max-width: 1100px) {
+  .popUp video,
+  .popUp img {
+    width: 346px;
+    height: 162px;
+  }
+}

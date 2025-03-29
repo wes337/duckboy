@@ -5,8 +5,11 @@ import Player from "./components/player";
 import DuckHunt from "./components/duck-hunt";
 import Footer from "./components/footer";
 import SocialMediaLinks from "./components/social-media-links";
-import styles from "./app.module.css";
 import Sign from "./components/sign";
+import Ads from "./components/ads";
+import Cursor from "./components/cursor";
+import Werewolves from "./components/werewolves";
+import styles from "./app.module.css";
 
 function App() {
   onMount(async () => {
@@ -65,11 +68,14 @@ function App() {
 
   return (
     <div class={styles.app}>
+      <Cursor />
+      <Ads />
       <Sign />
       <Player />
       <Footer />
       <DuckHunt />
       <SocialMediaLinks />
+      <Werewolves />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onCleanup, Show } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
 import { playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
@@ -8,44 +8,11 @@ import PlayerIntro from "./player-intro";
 import VolumeSlider from "./volume-slider";
 import Controls from "./controls";
 import PlayerContent from "./player-content";
+import DuckButton from "./duck-button";
 import styles from "./player.module.css";
 
 export default function Player() {
   const [initialized, setInitialized] = createSignal(false);
-  const [highlightDuck, setHighlightDuck] = createSignal(false);
-  const [duckButtonClicked, setDuckButtonClicked] = createSignal(false);
-
-  createEffect(async () => {
-    if (!initialized() || state.duckHunt() || duckButtonClicked()) {
-      return;
-    }
-
-    const highlightDuckButton = () => {
-      return new Promise((resolve) => {
-        playSoundEffect("quack.mp3");
-        setHighlightDuck(true);
-        setTimeout(() => {
-          setHighlightDuck(false);
-          resolve();
-        }, 500);
-      });
-    };
-
-    const timeout = setTimeout(async () => {
-      await highlightDuckButton();
-      await highlightDuckButton();
-    }, 100);
-
-    const interval = setInterval(async () => {
-      await highlightDuckButton();
-      await highlightDuckButton();
-    }, 30000);
-
-    onCleanup(() => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    });
-  });
 
   createEffect(() => {
     if (!AudioPlayer.state.visible) {
@@ -65,17 +32,6 @@ export default function Player() {
     setInitialized(true);
     AudioPlayer.play();
   });
-
-  const onClickDuckButton = () => {
-    setDuckButtonClicked(true);
-    playSoundEffect("duck.mp3");
-
-    if (state.duckHunt()) {
-      state.setDuckHunt(false);
-    } else {
-      state.setDuckHunt(true);
-    }
-  };
 
   return (
     <>
@@ -102,16 +58,7 @@ export default function Player() {
         <VolumeSlider />
         <Controls />
         <TV />
-        <button
-          classList={{
-            [styles.duckButton]: true,
-            [styles.highlight]: highlightDuck(),
-          }}
-          onClick={onClickDuckButton}
-        >
-          <img src={`/player/duck.png`} />
-          <img src={`/player/duck-pressed.png`} />
-        </button>
+        <DuckButton />
         <div class={styles.channel}>
           <Show when={state.getChannel() !== "None"}>
             <img
