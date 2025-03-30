@@ -17,8 +17,7 @@ function App() {
     AudioPlayer.init();
 
     // const CRT = 12;
-    // const SHORT_CAMEO = 11;
-    // const LONG_CAMEO = 12;
+    // const VIDEOS = 12;
 
     // const videosToPreload = [];
 
@@ -26,11 +25,7 @@ function App() {
     //   videosToPreload.push(`${CDN_URL}/videos/fx/crt-${i}.mp4`);
     // }
 
-    // for (let i = 1; i <= SHORT_CAMEO; i++) {
-    //   videosToPreload.push(`${CDN_URL}/videos/short/${i}.mp4`);
-    // }
-
-    // for (let i = 1; i <= LONG_CAMEO; i++) {
+    // for (let i = 1; i <= VIDEOS; i++) {
     //   videosToPreload.push(`${CDN_URL}/videos/long/${i}.mp4`);
     // }
 
@@ -40,16 +35,10 @@ function App() {
       const handleUserInteraction = () => {
         const volume = AudioPlayer.volume;
 
-        const shortCameoVideo = document.getElementById("short-cameo");
-        if (shortCameoVideo && shortCameoVideo.muted) {
-          shortCameoVideo.muted = false;
-          shortCameoVideo.volume = volume;
-        }
-
-        const longCameoVideo = document.getElementById("long-cameo");
-        if (longCameoVideo && longCameoVideo.muted) {
-          longCameoVideo.muted = false;
-          longCameoVideo.volume = volume;
+        const video = document.getElementById("video");
+        if (video && video.muted) {
+          video.muted = false;
+          video.volume = volume;
         }
       };
 

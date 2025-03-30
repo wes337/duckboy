@@ -4,12 +4,11 @@ import styles from "./tv.module.css";
 
 export default function TV() {
   const onClickTV = () => {
-    if (state.showContent() === "video" || state.showContent() === "static") {
+    if (state.showContent() === "static") {
       return;
     }
 
-    const nextContent =
-      state.showContent() === "video-long" ? "audio" : "video-long";
+    const nextContent = state.showContent() === "video" ? "audio" : "video";
 
     state.setShowContent("static");
 

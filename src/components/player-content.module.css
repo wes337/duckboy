@@ -1,4 +1,6 @@
 .playerContent {
+  --player-padding: 2rem;
+
   position: absolute;
 
   width: calc(490 / 1231 * 100%);
@@ -10,8 +12,6 @@
   border-radius: 4px;
   background-color: black;
   outline: 0.2rem ridge rgba(128, 128, 128, 0.25);
-
-  --player-padding: 2rem;
 }
 
 .playerContent .static {
@@ -31,18 +31,7 @@
   mix-blend-mode: normal;
 }
 
-.playerContent .audio {
-  display: flex;
-  height: calc(100% - var(--player-padding));
-  width: calc(100% - var(--player-padding));
-  border-radius: 4px;
-  padding: calc(var(--player-padding) / 2);
-  background-color: #222222;
-  opacity: 0;
-}
-
-.playerContent .shortCameo,
-.playerContent .longCameo {
+.playerContent .video {
   position: absolute;
   opacity: 0;
   width: 100%;
@@ -50,281 +39,13 @@
   z-index: 2;
 }
 
-.playerContent .audio.show,
-.playerContent .shortCameo.show,
-.playerContent .longCameo.show {
+.playerContent .video.show {
   opacity: 1;
-}
-
-.playerContent .audio .borderTop {
-  position: absolute;
-  width: calc(100% - (var(--player-padding) / 2));
-  height: var(--player-padding);
-  object-fit: fill;
-  top: calc(var(--player-padding) / 10);
-  left: calc(var(--player-padding) / 4);
-  pointer-events: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.playerContent .audio .borderBottom {
-  position: absolute;
-  width: calc(100% - (var(--player-padding) / 2));
-  height: var(--player-padding);
-  object-fit: fill;
-  bottom: calc(var(--player-padding) / 10);
-  left: calc(var(--player-padding) / 4);
-  transform: scaleY(-1);
-  pointer-events: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.playerContent .audio .borderLeft {
-  position: absolute;
-  width: calc(var(--player-padding) - (var(--player-padding) / 4));
-  height: calc(100% - (var(--player-padding) * 2));
-  object-fit: fill;
-  top: calc(var(--player-padding));
-  left: calc(var(--player-padding) / 3);
-  transform: scaleX(-1);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-
-.playerContent .audio .borderRight {
-  position: absolute;
-  width: calc(var(--player-padding) - (var(--player-padding) / 4));
-  height: calc(100% - (var(--player-padding) * 2));
-  object-fit: fill;
-  top: calc(var(--player-padding));
-  right: calc(var(--player-padding) / 3);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-
-.playerContent .audio:before {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #000000;
-  background-image: url("/patterns/concrete-wall-2.png");
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: overlay;
-  border-radius: 4px;
-}
-
-.playerContent .audio .inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1;
-  width: 100%;
-  background-image: url("/patterns/black-orchid.png");
-  border-radius: 4px;
-  background-size: cover;
-  font-family: var(--pixel-font);
-  color: #222222;
-  background-color: #ffdd33;
-  background-blend-mode: overlay;
-  text-shadow: 0.1rem 0.05rem 0 #fb7840cc;
-  outline: 0.2rem solid #fb784080;
-  outline-offset: -0.1rem;
-  font-family: var(--pixel-font);
-  z-index: 1;
-}
-
-.playerContent .cover {
-  position: relative;
-  margin: auto;
-  width: 50%;
-  height: 100%;
-  max-height: 20vh;
-  border-radius: 4px;
-  margin-top: var(--player-padding);
-}
-
-.playerContent .cover:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  content: "";
-  background-image: url("/patterns/ice-age.png");
-  background-size: cover;
-  mix-blend-mode: overlay;
-  opacity: 1;
-}
-
-.playerContent .cover img {
-  height: 100%;
-  width: 100%;
-  object-fit: fill;
-  border-radius: 4px;
-  outline: 0.2rem ridge #fb784033;
-}
-
-.playerContent .details {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-
-  flex-grow: 1;
-  height: 100%;
-}
-
-.playerContent .details .artist {
-  font-size: 1.8rem;
-  text-shadow: 0.1rem 0.05rem 0 #fb7840cc;
-  opacity: 0.85;
-}
-
-.playerContent .details .name {
-  display: flex;
-  font-size: 1.2rem;
-  text-shadow: 0.1rem 0.05rem 0 #fb7840cc;
-  outline: 0.2rem solid #fb784050;
-  border-radius: 2px;
-  background-color: #fb784033;
-  width: calc(100% - var(--player-padding) * 2);
-
-  marquee {
-    width: 100%;
-  }
-}
-
-.playerContent .details .duration {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.85;
-  text-align: center;
-  width: 100px;
-  gap: 0.2rem;
-}
-
-.playerContent .seek {
-  position: relative;
-  width: calc(100% - var(--player-padding) * 2);
-  height: auto;
-  height: 1rem;
-  pointer-events: none;
-  user-select: none;
-}
-
-.playerContent .seek .bar {
-  position: absolute;
-  top: 25%;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  user-select: none;
-}
-
-.playerContent .seek .knob {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: auto;
-  pointer-events: none;
-  user-select: none;
-}
-
-@media screen and (min-height: 400px) and (max-height: 950px) and (min-width: 500px) {
-  .playerContent .audio .borderBottom,
-  .playerContent .audio .borderTop {
-    height: 18px;
-  }
-
-  .playerContent .audio .borderLeft,
-  .playerContent .audio .borderRight {
-    width: 12px;
-    height: calc(100% - 18px);
-    top: 8px;
-  }
-
-  .playerContent .cover {
-    width: 50%;
-    margin-top: 1rem;
-  }
-
-  .playerContent .details {
-    gap: 0.6rem;
-  }
-
-  .playerContent .details .artist {
-    font-size: 1.6rem;
-  }
-
-  .playerContent .details .name {
-    font-size: 1.8rem;
-  }
-
-  .playerContent .details .duration {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-}
-
-@media screen and (min-height: 950px) {
-  .playerContent .cover {
-    height: 100%;
-    width: 55%;
-    max-height: 33vh;
-  }
-
-  .playerContent .details {
-    gap: 0.4rem;
-  }
-
-  .playerContent .details .artist {
-    font-size: 1.8rem;
-  }
-
-  .playerContent .details .name {
-    font-size: 2.4rem;
-  }
-}
-
-@media screen and (min-width: 2000px) {
-  .playerContent .cover {
-    width: 70%;
-  }
 }
 
 @media screen and (max-width: 500px) {
   .playerContent {
     --player-padding: 1rem;
-  }
-
-  .playerContent .cover {
-    max-height: 12vh;
-  }
-
-  .playerContent .details {
-    gap: 0.2rem;
-  }
-
-  .playerContent .details .artist {
-    font-size: 1rem;
-  }
-
-  .playerContent .details .name {
-    font-size: 1.4rem;
   }
 }
 
@@ -332,18 +53,9 @@
   .playerContent {
     --player-padding: 0.75rem;
   }
-
-  .playerContent .seek {
-    margin: 0.2rem 0;
-  }
-
-  .playerContent .details .duration {
-    font-size: 0.8rem;
-    margin-bottom: 0.4rem;
-  }
 }
 
-.playerContent .video {
+.playerContent .inner {
   position: relative;
   background-color: #0e0e0e;
   background-image: url("/patterns/ice-age.png");
@@ -352,18 +64,18 @@
   width: 100%;
   height: 100%;
   border-radius: 4px;
-
-  video {
-    width: calc(100% - 2rem);
-    height: 100%;
-    z-index: 1;
-    object-fit: fill;
-    border-radius: 4px;
-    padding: 0 1rem;
-  }
 }
 
-.playerContent .video:before {
+.playerContent .inner video {
+  width: calc(100% - 2rem);
+  height: 100%;
+  z-index: 1;
+  object-fit: fill;
+  border-radius: 4px;
+  padding: 0 1rem;
+}
+
+.playerContent .inner:before {
   position: absolute;
   content: "";
   width: 100%;
@@ -377,19 +89,6 @@
   mix-blend-mode: overlay;
   border-radius: 4px;
   opacity: 0.25;
-}
-
-.playerContent .art {
-  position: absolute;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  mix-blend-mode: overlay;
-  border-radius: 4px;
-  opacity: 0.5;
-  pointer-events: none;
-  user-select: none;
 }
 
 .playerContent video {

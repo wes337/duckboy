@@ -115,7 +115,7 @@ export async function preloadImages(imageUrls) {
     return new Promise((resolve, reject) => {
       const img = document.createElement("img");
 
-      img.addEventListener("loadeddata", () => {
+      img.addEventListener("load", () => {
         resolve(img);
       });
 
@@ -125,7 +125,6 @@ export async function preloadImages(imageUrls) {
 
       img.preload = "auto";
       img.src = url;
-      img.load();
     });
   });
 

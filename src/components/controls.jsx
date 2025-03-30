@@ -2,12 +2,11 @@ import { playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
 import styles from "./controls.module.css";
-import { gotoNextLongCameo, gotoPreviousLongCameo } from "./player-content";
 
 export default function Controls() {
   const onClickPlay = () => {
     if (state.videoPlayer.playing) {
-      document.getElementById("long-cameo")?.play();
+      document.getElementById("video")?.play();
       state.setVideoPlayer("paused", false);
       return;
     }
@@ -24,8 +23,8 @@ export default function Controls() {
     playSoundEffect("click-hard.mp3");
 
     if (state.videoPlayer.playing) {
-      gotoPreviousLongCameo();
-      document.getElementById("long-cameo")?.play();
+      state.gotoPreviousVideo();
+      document.getElementById("video")?.play();
       state.setVideoPlayer("paused", false);
       return;
     }
@@ -37,8 +36,8 @@ export default function Controls() {
     playSoundEffect("click-hard.mp3");
 
     if (state.videoPlayer.playing) {
-      gotoNextLongCameo();
-      document.getElementById("long-cameo")?.play();
+      state.gotoNextVideo();
+      document.getElementById("video")?.play();
       state.setVideoPlayer("paused", false);
       return;
     }
@@ -48,7 +47,7 @@ export default function Controls() {
 
   const onClickStop = () => {
     if (state.videoPlayer.playing) {
-      document.getElementById("long-cameo")?.pause();
+      document.getElementById("video")?.pause();
       state.setVideoPlayer("paused", true);
       return;
     }
