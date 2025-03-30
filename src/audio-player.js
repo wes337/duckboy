@@ -11,6 +11,7 @@ export default class AudioPlayer {
       url: `${CDN_URL}/music/${encodeURIComponent(
         "after further reasoning, i'm going to bed"
       )}.mp3`,
+      bumper: `/videos/bumpers/after.mp4`,
     },
     {
       name: "my love life needs a lobotomy",
@@ -18,6 +19,7 @@ export default class AudioPlayer {
       url: `${CDN_URL}/music/${encodeURIComponent(
         "my love life needs a lobotomy"
       )}.mp3`,
+      bumper: `/videos/bumpers/lobotomy.mp4`,
     },
     {
       name: "ROUGAROU (i've become the monster)",
@@ -25,17 +27,19 @@ export default class AudioPlayer {
       url: `${CDN_URL}/music/${encodeURIComponent(
         "ROUGAROU (i've become the monster)"
       )}.mp3`,
+      bumper: `/videos/bumpers/rougarou.mp4`,
     },
     {
       name: "XXL Hadron Collider",
       album: "tragic",
       url: `${CDN_URL}/music/${encodeURIComponent("XXL Hadron Collider")}.mp3`,
+      bumper: `/videos/bumpers/xxl.mp4`,
     },
-
     {
       name: "EXCALIBUR",
       album: "hymns",
       url: `${CDN_URL}/music/EXCALIBUR.mp3`,
+      bumper: `/videos/bumpers/excalibur.mp4`,
     },
   ];
 

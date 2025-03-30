@@ -1,4 +1,4 @@
-import { createMemo } from "solid-js";
+import { createSignal, createMemo, createEffect, onCleanup } from "solid-js";
 import { ALBUMS } from "../constants";
 import { randomElementFromArray } from "../utils";
 import AudioPlayer from "../audio-player";
@@ -8,6 +8,7 @@ import styles from "./player-audio.module.css";
 export default function PlayerContent() {
   const initialized = () => state.sceneDone("intro");
   const currentTrack = () => AudioPlayer.currentTrack;
+  const [showBumper, setShowBumper] = createSignal(false);
 
   const showAudio = createMemo(() => {
     return initialized() && state.showContent() === "audio";
@@ -16,6 +17,10 @@ export default function PlayerContent() {
   const bumper = createMemo(() => {
     if (!currentTrack()) {
       return null;
+    }
+
+    if (currentTrack().bumper) {
+      return currentTrack().bumper;
     }
 
     const bumpers = ALBUMS[currentTrack().album]?.bumpers || [];
@@ -27,11 +32,27 @@ export default function PlayerContent() {
     return randomElementFromArray(bumpers);
   });
 
+  createEffect(() => {
+    if (!bumper()) {
+      return;
+    }
+
+    setShowBumper(true);
+
+    const interval = setInterval(() => {
+      setShowBumper((showBumper) => !showBumper);
+    }, 10000);
+
+    onCleanup(() => {
+      clearInterval(interval);
+    });
+  });
+
   return (
     <div classList={{ [styles.playerAudio]: true, [styles.show]: showAudio() }}>
       <div class={styles.inner}>
         {bumper() && (
-          <div class={styles.art}>
+          <div class={styles.bumperBackground}>
             <video src={bumper()} autoplay muted loop playsinline />
           </div>
         )}
@@ -41,6 +62,16 @@ export default function PlayerContent() {
         <img class={styles.borderRight} src={`/patterns/gold-border-x.png`} />
         <div class={styles.cover}>
           <img src={ALBUMS[currentTrack().album].cover} />
+          {bumper() && (
+            <video
+              classList={{ [styles.bumper]: true, [styles.show]: showBumper() }}
+              src={bumper()}
+              autoplay
+              muted
+              loop
+              playsinline
+            />
+          )}
         </div>
         <div class={styles.details}>
           <div class={styles.artist}>DUCKBOY</div>
