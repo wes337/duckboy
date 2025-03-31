@@ -3,6 +3,7 @@ import {
   preloadImages,
   randomElementFromArray,
   isMobileSizedScreen,
+  playSoundEffect,
 } from "../utils";
 import state from "../state";
 import styles from "./ducky.module.css";
@@ -87,6 +88,7 @@ export default function Ducky() {
         state.setDucky("");
       }, ANIMATION_DURATIONS.DIE);
     } else {
+      playSoundEffect("quack.mp3");
       setSpeech(randomElementFromArray(SPEECH));
     }
   };

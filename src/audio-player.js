@@ -19,7 +19,7 @@ export default class AudioPlayer {
       url: `${CDN_URL}/music/${encodeURIComponent(
         "my love life needs a lobotomy"
       )}.mp3`,
-      bumper: `${CDN_URL}/videos/bumpers/_lobotomy.mp4`,
+      bumper: `${CDN_URL}/videos/bumpers/_lobotomy2.mp4`,
     },
     {
       name: "ROUGAROU (i've become the monster)",
@@ -40,6 +40,30 @@ export default class AudioPlayer {
       album: "hymns",
       url: `${CDN_URL}/music/EXCALIBUR.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_excalibur.mp4`,
+    },
+    {
+      name: "Heroin As a Recreational Activity",
+      album: "hymns",
+      url: `${CDN_URL}/music/${encodeURIComponent(
+        "Heroin As a Recreational Activity"
+      )}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/_heroin.mp4`,
+    },
+    {
+      name: "Pearls Are Just Oyster Puke",
+      album: "hymns",
+      url: `${CDN_URL}/music/${encodeURIComponent(
+        "Pearls Are Just Oyster Puke"
+      )}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/_pearls.mp4`,
+    },
+    {
+      name: "I Was a Teenage Nihilist",
+      album: "hymns",
+      url: `${CDN_URL}/music/${encodeURIComponent(
+        "I Was a Teenage Nihilist"
+      )}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/_teenage.mp4`,
     },
   ];
 
