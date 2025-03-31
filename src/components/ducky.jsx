@@ -94,12 +94,7 @@ export default function Ducky() {
   };
 
   onMount(() => {
-    preloadImages([
-      "/ducky/entrance.gif",
-      "/ducky/idle.gif",
-      "/ducky/talk.gif",
-      "/ducky/die.gif",
-    ]);
+    preloadImages(["/ducky/idle.gif", "/ducky/talk.gif", "/ducky/die.gif"]);
   });
 
   createEffect(() => {
