@@ -3,6 +3,11 @@
   src: url("/fonts/OldWizard.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Ducky";
+  src: url("/fonts/ducky.ttf") format("truetype");
+}
+
 :root {
   --player-width: 25vw;
   --player-side-width: 7vw;
@@ -13,6 +18,7 @@
   --ui-font: "Yatra One", system-ui;
   --medieval-font: "Old Wizard", system-ui;
   --pixel-font: "Jersey 15", sans-serif;
+  --ducky-font: "Ducky", sans-serif;
 }
 
 html,

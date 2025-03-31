@@ -8,7 +8,6 @@
   opacity: 0;
   font-family: var(--pixel-font);
   background-color: #ffdd33;
-
   outline: 1.1rem solid #222222d5;
   outline-offset: -1.1rem;
 }
@@ -79,7 +78,7 @@
 .playerAudio .bumper {
   display: flex;
   width: 80%;
-  height: calc(610 / 1288 * 120%);
+  height: calc(610 / 1288 * 100%);
   border-radius: 4px;
   margin: auto;
   margin-bottom: 0.4rem;
@@ -90,6 +89,12 @@
   .playerAudio .bumper {
     height: calc(610 / 1288 * 100%);
     margin-bottom: 0.2rem;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .playerAudio .bumper {
+    height: calc(610 / 1288 * 120%);
   }
 }
 
