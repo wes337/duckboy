@@ -82,6 +82,11 @@ export default function Ducky() {
 
   const onClick = () => {
     if (state.duckHunt()) {
+      if (speechTimer) {
+        clearTimeout(speechTimer);
+      }
+
+      setSpeech("");
       state.setDucky("die");
 
       animationTimer = setTimeout(() => {
@@ -95,6 +100,13 @@ export default function Ducky() {
 
   onMount(() => {
     preloadImages(["/ducky/idle.gif", "/ducky/talk.gif", "/ducky/die.gif"]);
+
+    const speechBubble = document.getElementById("ducky-speech");
+    if (speechBubble) {
+      speechBubble.style.transform = `translate(${
+        speechBubble.clientWidth / 2
+      }px, -${isMobileSizedScreen() ? 170 : 220}px)`;
+    }
   });
 
   createEffect(() => {
@@ -111,7 +123,7 @@ export default function Ducky() {
     const speechBubble = document.getElementById("ducky-speech");
     if (speechBubble) {
       speechBubble.style.transform = `translate(${
-        speechBubble.clientWidth / 4
+        speechBubble.clientWidth / 2
       }px, -${isMobileSizedScreen() ? 170 : 220}px)`;
     }
 
@@ -134,11 +146,14 @@ export default function Ducky() {
   return (
     <Show when={state.ducky()}>
       <div class={styles.ducky} onClick={onClick}>
-        <Show when={speech()}>
-          <div id="ducky-speech" class={styles.speech}>
-            {speech()}
-          </div>
-        </Show>
+        <div
+          id="ducky-speech"
+          classList={{ [styles.speech]: true, [styles.show]: speech() }}
+        >
+          <span>{speech()}</span>
+          <img class={styles.bubble} src={"/ducky/speech.png"} alt="" />
+        </div>
+
         <img
           key={state.ducky()}
           src={`/ducky/${state.ducky()}.gif`}

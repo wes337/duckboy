@@ -3,7 +3,7 @@ import { playSoundEffect } from "../utils";
 import state from "../state";
 import styles from "./duck-button.module.css";
 
-const EVENTS = ["ducky", "duckHunt", "ads", , "werewolf"];
+const EVENTS = ["ducky", "duckHunt", "ads", "werewolf"];
 
 export default function DuckButton() {
   const [eventIndex, setEventIndex] = createSignal(0);
