@@ -22,8 +22,8 @@
 }
 
 .duckButton.highlight img {
-  filter: brightness(2);
-  transform: scale(1.05);
+  filter: brightness(2) drop-shadow(0px 0px 16px wheat);
+  transform: scale(1.2);
 }
 
 .duckButton img:nth-child(2) {

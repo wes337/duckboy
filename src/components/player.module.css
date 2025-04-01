@@ -157,7 +157,7 @@
   height: 100%;
   border-radius: 100%;
   pointer-events: all;
-  filter: brightness(0.9) saturate(0.75);
+  filter: brightness(0.8) saturate(0.75);
   transition: all 0.2s ease;
 }
 
@@ -171,5 +171,6 @@
 }
 
 .album.active {
-  filter: brightness(1.2) saturate(1.2);
+  filter: brightness(1.2) saturate(1.5)
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.75));
 }

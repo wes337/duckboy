@@ -76,23 +76,11 @@ export default function PlayerContent() {
   });
 
   const onEnded = () => {
-    if (!state.showContent().match(/video/gi)) {
+    if (state.showContent() !== "video") {
       return;
     }
 
-    const nextContent = state.showContent();
-    state.setShowContent("static");
-    videoEnd = setTimeout(() => {
-      if (nextContent === "video") {
-        state.gotoNextVideo();
-      }
-
-      state.setShowContent(nextContent);
-
-      if (nextContent === "audio") {
-        AudioPlayer.play();
-      }
-    }, 500);
+    state.gotoNextVideo();
   };
 
   return (

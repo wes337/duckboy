@@ -63,10 +63,17 @@ export default function Player() {
           <button
             classList={{
               [styles.album]: true,
-              [styles.active]: AudioPlayer.currentTrack?.album === "hymns",
+              [styles.active]:
+                state.showContent() === "audio" &&
+                AudioPlayer.currentTrack?.album === "hymns",
             }}
             onClick={() => {
-              if (AudioPlayer.currentAlbum === "hymns") {
+              playSoundEffect("click-softest.mp3", true);
+
+              if (
+                state.showContent() !== "audio" ||
+                AudioPlayer.currentAlbum === "hymns"
+              ) {
                 return;
               }
 
@@ -78,10 +85,17 @@ export default function Player() {
           <button
             classList={{
               [styles.album]: true,
-              [styles.active]: AudioPlayer.currentTrack?.album === "tragic",
+              [styles.active]:
+                state.showContent() === "audio" &&
+                AudioPlayer.currentTrack?.album === "tragic",
             }}
             onClick={() => {
-              if (AudioPlayer.currentAlbum === "tragic") {
+              playSoundEffect("click-softest.mp3", true);
+
+              if (
+                state.showContent() !== "audio" ||
+                AudioPlayer.currentAlbum === "tragic"
+              ) {
                 return;
               }
 
@@ -93,7 +107,9 @@ export default function Player() {
           <button
             classList={{
               [styles.album]: true,
-              [styles.active]: AudioPlayer.currentTrack?.album === "coping",
+              [styles.active]:
+                state.showContent() === "audio" &&
+                AudioPlayer.currentTrack?.album === "coping",
             }}
           >
             <img src={`/player/blue-button.png`} alt="" />
