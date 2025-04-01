@@ -6,36 +6,6 @@ import { calculateTime } from "./utils";
 export default class AudioPlayer {
   static tracks = [
     {
-      name: "after further reasoning, i'm going to bed",
-      album: "tragic",
-      url: `${CDN_URL}/music/${encodeURIComponent(
-        "after further reasoning, i'm going to bed"
-      )}.mp3`,
-      bumper: `${CDN_URL}/videos/bumpers/_after.mp4`,
-    },
-    {
-      name: "my love life needs a lobotomy",
-      album: "tragic",
-      url: `${CDN_URL}/music/${encodeURIComponent(
-        "my love life needs a lobotomy"
-      )}.mp3`,
-      bumper: `${CDN_URL}/videos/bumpers/_lobotomy2.mp4`,
-    },
-    {
-      name: "ROUGAROU (i've become the monster)",
-      album: "tragic",
-      url: `${CDN_URL}/music/${encodeURIComponent(
-        "ROUGAROU (i've become the monster)"
-      )}.mp3`,
-      bumper: `${CDN_URL}/videos/bumpers/_rougarou.mp4`,
-    },
-    {
-      name: "XXL Hadron Collider",
-      album: "tragic",
-      url: `${CDN_URL}/music/${encodeURIComponent("XXL Hadron Collider")}.mp3`,
-      bumper: `${CDN_URL}/videos/bumpers/_xxl.mp4`,
-    },
-    {
       name: "EXCALIBUR",
       album: "hymns",
       url: `${CDN_URL}/music/EXCALIBUR.mp3`,
@@ -64,6 +34,36 @@ export default class AudioPlayer {
         "I Was a Teenage Nihilist"
       )}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_teenage.mp4`,
+    },
+    {
+      name: "XXL Hadron Collider",
+      album: "tragic",
+      url: `${CDN_URL}/music/${encodeURIComponent("XXL Hadron Collider")}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/_xxl.mp4`,
+    },
+    {
+      name: "after further reasoning, i'm going to bed",
+      album: "tragic",
+      url: `${CDN_URL}/music/${encodeURIComponent(
+        "after further reasoning, i'm going to bed"
+      )}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/_after.mp4`,
+    },
+    {
+      name: "my love life needs a lobotomy",
+      album: "tragic",
+      url: `${CDN_URL}/music/${encodeURIComponent(
+        "my love life needs a lobotomy"
+      )}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/_lobotomy2.mp4`,
+    },
+    {
+      name: "ROUGAROU (i've become the monster)",
+      album: "tragic",
+      url: `${CDN_URL}/music/${encodeURIComponent(
+        "ROUGAROU (i've become the monster)"
+      )}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/_rougarou.mp4`,
     },
   ];
 
@@ -168,6 +168,16 @@ export default class AudioPlayer {
     return store.tracks[store.currentTrackIndex];
   }
 
+  static get currentAlbum() {
+    const [store] = AudioPlayer.store;
+
+    if (store.tracks.length === 0) {
+      return null;
+    }
+
+    return store.tracks[store.currentTrackIndex].album;
+  }
+
   static play() {
     if (!AudioPlayer.currentTrack || !AudioPlayer.currentTrack.sound) {
       return;
@@ -213,6 +223,38 @@ export default class AudioPlayer {
       "currentTrackIndex",
       previousTrack ? previousTrackIndex : store.tracks.length - 1
     );
+
+    if (!AudioPlayer.playing) {
+      AudioPlayer.pause();
+    } else {
+      AudioPlayer.play();
+    }
+  }
+
+  static gotoTrack(trackName) {
+    if (AudioPlayer.currentTrack) {
+      AudioPlayer.currentTrack.sound.stop();
+    }
+
+    const [store, setStore] = AudioPlayer.store;
+    const trackIndex = store.tracks.findIndex(({ name }) => name === trackName);
+    setStore("currentTrackIndex", trackIndex);
+
+    if (!AudioPlayer.playing) {
+      AudioPlayer.pause();
+    } else {
+      AudioPlayer.play();
+    }
+  }
+
+  static gotoAlbum(album) {
+    if (AudioPlayer.currentTrack) {
+      AudioPlayer.currentTrack.sound.stop();
+    }
+
+    const [store, setStore] = AudioPlayer.store;
+    const trackIndex = store.tracks.findIndex((track) => track.album === album);
+    setStore("currentTrackIndex", trackIndex);
 
     if (!AudioPlayer.playing) {
       AudioPlayer.pause();

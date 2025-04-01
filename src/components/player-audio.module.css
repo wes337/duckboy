@@ -1,4 +1,11 @@
 .playerAudio {
+  --text-color: #000000;
+  --text-opacity: 0.75;
+  --primary-color: #ffdd33;
+  --secondary-color: #fb7840cc;
+  --shadow-color: color-mix(in srgb, var(--secondary-color), transparent 50%);
+  --edge-color: #222222d5;
+
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -7,21 +14,36 @@
   padding: 0;
   opacity: 0;
   font-family: var(--pixel-font);
-  background-color: #ffdd33;
-  outline: 1.1rem solid #222222d5;
-  outline-offset: -1.1rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  outline: 1.1rem solid var(--edge-color);
+  outline-offset: -1rem;
+}
+
+.playerAudio.green {
+  --text-color: #ffffff;
+  --text-opacity: 1;
+  --primary-color: #76b100;
+  --secondary-color: #344e00;
+  --shadow-color: color-mix(in srgb, var(--secondary-color), transparent 50%);
+  --edge-color: #2222222c;
+}
+
+.playerAudio.green .seek {
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: overlay;
 }
 
 @media screen and (max-height: 950px) {
   .playerAudio {
-    outline: 0.2rem solid #222222d5;
+    outline: 0.4rem solid #2222222c;
     outline-offset: -0.2rem;
   }
 }
 
 @media screen and (max-width: 800px) {
   .playerAudio {
-    outline: 0.2rem solid #222222d5;
+    outline: 0.4rem solid #2222222c;
     outline-offset: -0.2rem;
   }
 }
@@ -110,14 +132,14 @@
   width: 100%;
   object-fit: cover;
   border-radius: 4px;
-  outline: 0.2rem solid #fb784050;
+  outline: 0.2rem solid var(--shadow-color);
 }
 
 .playerAudio .artist {
   font-size: 1.8rem;
-  text-shadow: 0.1rem 0.05rem 0 #fb7840cc;
+  text-shadow: 0.1rem 0.05rem 0 var(--secondary-color);
   text-align: center;
-  opacity: 0.75;
+  opacity: var(--text-opacity);
 }
 
 @media screen and (max-height: 950px) {
@@ -136,16 +158,16 @@
   display: flex;
   align-items: center;
   font-size: 2rem;
-  text-shadow: 0.1rem 0.05rem 0 #fb7840cc;
-  outline: 0.2rem solid #fb784050;
+  text-shadow: 0.1rem 0.05rem 0 var(--secondary-color);
+  outline: 0.2rem solid var(--shadow-color);
   border-radius: 2px;
-  background-color: #fb784033;
+  background-color: color-mix(in srgb, var(--secondary-color), transparent 75%);
   width: 80%;
   margin: 0.4rem auto;
 
   marquee {
     width: 100%;
-    opacity: 0.85;
+    opacity: var(--text-opacity);
   }
 }
 
@@ -205,8 +227,8 @@
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  opacity: 0.75;
-  text-shadow: 0.1rem 0.05rem 0 #fb7840cc;
+  opacity: var(--text-opacity);
+  text-shadow: 0.1rem 0.05rem 0 var(--secondary-color);
   margin-bottom: auto;
 }
 
@@ -231,6 +253,8 @@
   pointer-events: none;
   user-select: none;
   z-index: 1;
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: overlay;
 }
 
 .playerAudio .borderBottom {
@@ -243,30 +267,44 @@
   pointer-events: none;
   user-select: none;
   z-index: 1;
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: overlay;
 }
 
 .playerAudio .borderLeft {
   position: absolute;
   width: auto;
-  height: 100%;
-  object-fit: fill;
-  top: 0;
+  height: 89%;
+  top: 5%;
   left: 0;
-  transform: scaleX(-1) scaleX(0.7);
+  object-fit: fill;
   pointer-events: none;
   user-select: none;
   z-index: 0;
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: overlay;
+  transform: scaleX(0.7) scaleX(-1);
 }
 
 .playerAudio .borderRight {
   position: absolute;
   width: auto;
-  height: 100%;
+  height: 89%;
+  top: 5%;
+  right: 0;
   object-fit: fill;
-  top: 0;
-  right: -1px;
   pointer-events: none;
   user-select: none;
   z-index: 0;
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: overlay;
   transform: scaleX(0.7);
+}
+
+.playerAudio.orange .borderTop,
+.playerAudio.orange .borderBottom,
+.playerAudio.orange .borderLeft,
+.playerAudio.orange .borderRight {
+  mix-blend-mode: normal;
+  filter: none;
 }

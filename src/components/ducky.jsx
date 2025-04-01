@@ -100,13 +100,6 @@ export default function Ducky() {
 
   onMount(() => {
     preloadImages(["/ducky/idle.gif", "/ducky/talk.gif", "/ducky/die.gif"]);
-
-    const speechBubble = document.getElementById("ducky-speech");
-    if (speechBubble) {
-      speechBubble.style.transform = `translate(${
-        speechBubble.clientWidth / 2
-      }px, -${isMobileSizedScreen() ? 170 : 220}px)`;
-    }
   });
 
   createEffect(() => {
@@ -118,14 +111,14 @@ export default function Ducky() {
       clearTimeout(speechTimer);
     }
 
-    state.setDucky("talk");
-
     const speechBubble = document.getElementById("ducky-speech");
     if (speechBubble) {
       speechBubble.style.transform = `translate(${
         speechBubble.clientWidth / 2
       }px, -${isMobileSizedScreen() ? 170 : 220}px)`;
     }
+
+    state.setDucky("talk");
 
     speechTimer = setTimeout(() => {
       setSpeech("");

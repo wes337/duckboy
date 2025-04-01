@@ -1,6 +1,7 @@
 import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 import { SCENES } from "./constants";
+import state from "./state";
 import AudioPlayer from "./audio-player";
 
 const [introDone, setIntroDone] = createSignal(false);
@@ -45,6 +46,10 @@ const getChannel = () => {
 };
 
 export const gotoNextVideo = () => {
+  if (state.showContent() === "static") {
+    return;
+  }
+
   setShowContent("static");
 
   setTimeout(() => {
@@ -64,6 +69,10 @@ export const gotoNextVideo = () => {
 };
 
 export const gotoPreviousVideo = () => {
+  if (state.showContent() === "static") {
+    return;
+  }
+
   setShowContent("static");
 
   setTimeout(() => {

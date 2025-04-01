@@ -59,6 +59,46 @@ export default function Player() {
         <Controls />
         <TV />
         <DuckButton />
+        <div class={styles.albums}>
+          <button
+            classList={{
+              [styles.album]: true,
+              [styles.active]: AudioPlayer.currentTrack?.album === "hymns",
+            }}
+            onClick={() => {
+              if (AudioPlayer.currentAlbum === "hymns") {
+                return;
+              }
+
+              AudioPlayer.gotoAlbum("hymns");
+            }}
+          >
+            <img src={`/player/orange-button.png`} alt="" />
+          </button>
+          <button
+            classList={{
+              [styles.album]: true,
+              [styles.active]: AudioPlayer.currentTrack?.album === "tragic",
+            }}
+            onClick={() => {
+              if (AudioPlayer.currentAlbum === "tragic") {
+                return;
+              }
+
+              AudioPlayer.gotoAlbum("tragic");
+            }}
+          >
+            <img src={`/player/green-button.png`} alt="" />
+          </button>
+          <button
+            classList={{
+              [styles.album]: true,
+              [styles.active]: AudioPlayer.currentTrack?.album === "coping",
+            }}
+          >
+            <img src={`/player/blue-button.png`} alt="" />
+          </button>
+        </div>
         <div class={styles.channel}>
           <Show when={state.getChannel() !== "None"}>
             <img
