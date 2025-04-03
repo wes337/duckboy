@@ -43,8 +43,8 @@
   --edge-color: #2222222c;
 }
 
-.playerAudio.blue .seek {
-  filter: grayscale(1) invert(1);
+.playerAudio.blue .seek .bar {
+  mix-blend-mode: hard-light;
 }
 
 .playerAudio.blue .artist {

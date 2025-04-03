@@ -7,18 +7,40 @@ export default function Spotify() {
   const currentTrack = () => AudioPlayer.currentTrack;
 
   onMount(() => {
+    let interval;
+
     window.onSpotifyIframeApiReady = (iframeAPI) => {
       const element = document.getElementById("spotify-embed");
       const options = {
         uri: `spotify:album:5t1WhjJFLi5avb8t68AHCf`,
       };
 
-      iframeAPI.createController(element, options, (controller) =>
-        setController(controller)
-      );
+      iframeAPI.createController(element, options, (controller) => {
+        setController(controller);
+
+        controller.addListener("ready", () => {
+          controller.pause();
+
+          if (interval) {
+            clearInterval(interval);
+          }
+
+          controller.play();
+
+          interval = setInterval(() => controller?.pause?.(), 50);
+        });
+      });
     };
 
-    onCleanup(() => controller()?.destroy?.());
+    onCleanup(() => {
+      if (controller()) {
+        controller().destroy?.();
+      }
+
+      if (interval) {
+        clearInterval(interval);
+      }
+    });
   });
 
   createEffect(() => {

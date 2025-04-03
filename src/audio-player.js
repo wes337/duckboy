@@ -5,6 +5,7 @@ import { calculateTime } from "./utils";
 
 export default class AudioPlayer {
   static tracks = [
+    // HYMNS
     {
       name: "EXCALIBUR",
       album: "hymns",
@@ -39,6 +40,8 @@ export default class AudioPlayer {
       bumper: `${CDN_URL}/videos/bumpers/_teenage.mp4`,
       spotifyId: "6VjuopTLuHqN8OPxKcab0o",
     },
+
+    // TRAGIC
     {
       name: "XXL Hadron Collider",
       album: "tragic",
@@ -58,9 +61,7 @@ export default class AudioPlayer {
     {
       name: "my love life needs a lobotomy",
       album: "tragic",
-      url: `${CDN_URL}/music/${encodeURIComponent(
-        "my love life needs a lobotomy"
-      )}.mp3`,
+      url: `${CDN_URL}/music/${encodeURIComponent("lobotomy")}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_lobotomy2.mp4`,
       spotifyId: "1olTYX0EATqhlmdE2K5p4g",
     },
