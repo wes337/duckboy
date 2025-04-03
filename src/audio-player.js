@@ -5,6 +5,35 @@ import { calculateTime } from "./utils";
 
 export default class AudioPlayer {
   static tracks = [
+    // COPING
+    {
+      name: "End Of Summer 2005",
+      album: "coping",
+      url: `${CDN_URL}/music/${encodeURIComponent("EXCALIBUR")}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/_summer.mp4`,
+      spotifyId: "6gg9wuYw3WvZ6bdfUxWZui",
+    },
+    {
+      name: "Kino Der Toten",
+      album: "coping",
+      url: `${CDN_URL}/music/${encodeURIComponent("EXCALIBUR")}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/kino.mp4`,
+      spotifyId: "6gg9wuYw3WvZ6bdfUxWZui",
+    },
+    {
+      name: "MOLDY MEMORIES",
+      album: "coping",
+      url: `${CDN_URL}/music/${encodeURIComponent("EXCALIBUR")}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/moldy.mp4`,
+      spotifyId: "6gg9wuYw3WvZ6bdfUxWZui",
+    },
+    {
+      name: "VCR Eject Button",
+      album: "coping",
+      url: `${CDN_URL}/music/${encodeURIComponent("EXCALIBUR")}.mp3`,
+      bumper: `${CDN_URL}/videos/bumpers/vcr.mp4`,
+      spotifyId: "6gg9wuYw3WvZ6bdfUxWZui",
+    },
     // HYMNS
     {
       name: "EXCALIBUR",
@@ -71,7 +100,7 @@ export default class AudioPlayer {
       url: `${CDN_URL}/music/${encodeURIComponent(
         "ROUGAROU (i've become the monster)"
       )}.mp3`,
-      bumper: `${CDN_URL}/videos/bumpers/_rougarou.mp4`,
+      bumper: `${CDN_URL}/videos/bumpers/new_rougarou.mp4`,
       spotifyId: "1GAXnQAb4GsTLBwszE0he4",
     },
   ];

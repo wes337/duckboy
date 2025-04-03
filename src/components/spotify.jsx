@@ -27,7 +27,7 @@ export default function Spotify() {
 
           controller.play();
 
-          interval = setInterval(() => controller?.pause?.(), 50);
+          interval = setInterval(() => controller?.pause?.(), 100);
         });
       });
     };
