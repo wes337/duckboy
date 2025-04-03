@@ -1,27 +1,16 @@
-import { createEffect, createSignal, createMemo, onCleanup } from "solid-js";
+import { createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import AudioPlayer from "../audio-player";
 import styles from "./spotify.module.css";
 
-export const SPOTIFY_ALBUM_IDS = {
-  tragic: "5t1WhjJFLi5avb8t68AHCf",
-  hymns: "0249YKLhbyTmcDuKp1nPEU",
-};
-
 export default function Spotify() {
   const [controller, setController] = createSignal(null);
-  const currentAlbum = () => AudioPlayer.currentAlbum;
   const currentTrack = () => AudioPlayer.currentTrack;
-  const albumId = createMemo(() => SPOTIFY_ALBUM_IDS[currentAlbum()]);
 
-  createEffect(() => {
-    if (!albumId()) {
-      return;
-    }
-
+  onMount(() => {
     window.onSpotifyIframeApiReady = (iframeAPI) => {
       const element = document.getElementById("spotify-embed");
       const options = {
-        uri: `spotify:album:${albumId()}`,
+        uri: `spotify:album:5t1WhjJFLi5avb8t68AHCf`,
       };
 
       iframeAPI.createController(element, options, (controller) =>
@@ -29,9 +18,7 @@ export default function Spotify() {
       );
     };
 
-    onCleanup(() => {
-      controller()?.destroy?.();
-    });
+    onCleanup(() => controller()?.destroy?.());
   });
 
   createEffect(() => {

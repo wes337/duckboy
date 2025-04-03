@@ -34,6 +34,23 @@
   mix-blend-mode: overlay;
 }
 
+.playerAudio.blue {
+  --text-color: #ffffff;
+  --text-opacity: 1;
+  --primary-color: color-mix(in srgb, #2758cf, white 50%);
+  --secondary-color: #002f9e;
+  --shadow-color: color-mix(in srgb, var(--secondary-color), transparent 50%);
+  --edge-color: #2222222c;
+}
+
+.playerAudio.blue .seek {
+  filter: grayscale(1) invert(1);
+}
+
+.playerAudio.blue .artist {
+  color: #ffdd33;
+}
+
 @media screen and (max-height: 950px) {
   .playerAudio {
     outline: 0.4rem solid #2222222c;
@@ -306,5 +323,13 @@
 .playerAudio.orange .borderLeft,
 .playerAudio.orange .borderRight {
   mix-blend-mode: normal;
+  filter: none;
+}
+
+.playerAudio.blue .borderTop,
+.playerAudio.blue .borderBottom,
+.playerAudio.blue .borderLeft,
+.playerAudio.blue .borderRight {
+  mix-blend-mode: hard-light;
   filter: none;
 }

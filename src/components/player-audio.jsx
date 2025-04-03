@@ -38,9 +38,9 @@ export default function PlayerContent() {
       case "tragic":
         return "green";
       case "hymns":
-        return "orange";
-      case "coping":
         return "blue";
+      case "coping":
+        return "orange";
       default:
         return "orange";
     }

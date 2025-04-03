@@ -65,6 +65,30 @@ export default function Player() {
               [styles.album]: true,
               [styles.active]:
                 state.showContent() === "audio" &&
+                AudioPlayer.currentTrack?.album === "coping",
+            }}
+            onClick={() => {
+              playSoundEffect("click-softest.mp3", true);
+
+              return; // Remove when album released
+
+              if (
+                state.showContent() !== "audio" ||
+                AudioPlayer.currentAlbum === "coping"
+              ) {
+                return;
+              }
+
+              AudioPlayer.gotoAlbum("coping");
+            }}
+          >
+            <img src={`/player/orange-button.png`} alt="" />
+          </button>
+          <button
+            classList={{
+              [styles.album]: true,
+              [styles.active]:
+                state.showContent() === "audio" &&
                 AudioPlayer.currentTrack?.album === "hymns",
             }}
             onClick={() => {
@@ -80,7 +104,7 @@ export default function Player() {
               AudioPlayer.gotoAlbum("hymns");
             }}
           >
-            <img src={`/player/orange-button.png`} alt="" />
+            <img src={`/player/blue-button.png`} alt="" />
           </button>
           <button
             classList={{
@@ -103,16 +127,6 @@ export default function Player() {
             }}
           >
             <img src={`/player/green-button.png`} alt="" />
-          </button>
-          <button
-            classList={{
-              [styles.album]: true,
-              [styles.active]:
-                state.showContent() === "audio" &&
-                AudioPlayer.currentTrack?.album === "coping",
-            }}
-          >
-            <img src={`/player/blue-button.png`} alt="" />
           </button>
         </div>
         <div class={styles.channel}>
