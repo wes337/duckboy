@@ -10,6 +10,7 @@ export default class AudioPlayer {
       album: "hymns",
       url: `${CDN_URL}/music/EXCALIBUR.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_excalibur.mp4`,
+      spotifyId: "6gg9wuYw3WvZ6bdfUxWZui",
     },
     {
       name: "Heroin As a Recreational Activity",
@@ -18,6 +19,7 @@ export default class AudioPlayer {
         "Heroin As a Recreational Activity"
       )}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_heroin.mp4`,
+      spotifyId: "1m6dHNf8VxTpVhfUZVW5PU",
     },
     {
       name: "Pearls Are Just Oyster Puke",
@@ -26,6 +28,7 @@ export default class AudioPlayer {
         "Pearls Are Just Oyster Puke"
       )}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_pearls.mp4`,
+      spotifyId: "47hDgPhkHaDvGkWoCbOTfl",
     },
     {
       name: "I Was a Teenage Nihilist",
@@ -34,12 +37,14 @@ export default class AudioPlayer {
         "I Was a Teenage Nihilist"
       )}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_teenage.mp4`,
+      spotifyId: "6VjuopTLuHqN8OPxKcab0o",
     },
     {
       name: "XXL Hadron Collider",
       album: "tragic",
       url: `${CDN_URL}/music/${encodeURIComponent("XXL Hadron Collider")}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_xxl.mp4`,
+      spotifyId: "0CZk2HzyTsgedF030FwJ0R",
     },
     {
       name: "after further reasoning, i'm going to bed",
@@ -48,6 +53,7 @@ export default class AudioPlayer {
         "after further reasoning, i'm going to bed"
       )}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_after.mp4`,
+      spotifyId: "7q7RFus7C9YUgaf1DNir7v",
     },
     {
       name: "my love life needs a lobotomy",
@@ -56,6 +62,7 @@ export default class AudioPlayer {
         "my love life needs a lobotomy"
       )}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_lobotomy2.mp4`,
+      spotifyId: "1olTYX0EATqhlmdE2K5p4g",
     },
     {
       name: "ROUGAROU (i've become the monster)",
@@ -64,6 +71,7 @@ export default class AudioPlayer {
         "ROUGAROU (i've become the monster)"
       )}.mp3`,
       bumper: `${CDN_URL}/videos/bumpers/_rougarou.mp4`,
+      spotifyId: "1GAXnQAb4GsTLBwszE0he4",
     },
   ];
 
