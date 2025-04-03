@@ -1,5 +1,6 @@
 import { onMount, onCleanup } from "solid-js";
-// import { CDN_URL, preloadVideos } from "./utils";
+import { CDN_URL, NUMBER_OF_VIDEOS } from "./constants";
+import { isMobileDevice, preloadVideos } from "./utils";
 import AudioPlayer from "./audio-player";
 import Player from "./components/player";
 import DuckHunt from "./components/duck-hunt";
@@ -16,39 +17,38 @@ function App() {
   onMount(async () => {
     AudioPlayer.init();
 
-    // const CRT = 12;
-    // const VIDEOS = 12;
+    if (!isMobileDevice()) {
+      const CRT = 12;
 
-    // const videosToPreload = [];
+      const videosToPreload = [];
 
-    // for (let i = 1; i <= CRT; i++) {
-    //   videosToPreload.push(`${CDN_URL}/videos/fx/crt-${i}.mp4`);
-    // }
+      for (let i = 1; i <= CRT; i++) {
+        videosToPreload.push(`${CDN_URL}/videos/fx/crt-${i}.mp4`);
+      }
 
-    // for (let i = 1; i <= VIDEOS; i++) {
-    //   videosToPreload.push(`${CDN_URL}/videos/long/${i}.mp4`);
-    // }
+      for (let i = 1; i <= NUMBER_OF_VIDEOS; i++) {
+        videosToPreload.push(`${CDN_URL}/videos/cameos/${i}.mp4`);
+      }
 
-    // await preloadVideos(videosToPreload);
+      await preloadVideos(videosToPreload);
+    }
 
-    onMount(() => {
-      const handleUserInteraction = () => {
-        const volume = AudioPlayer.volume;
+    const handleUserInteraction = () => {
+      const volume = AudioPlayer.volume;
 
-        const video = document.getElementById("video");
-        if (video && video.muted) {
-          video.muted = false;
-          video.volume = volume;
-        }
-      };
+      const video = document.getElementById("video");
+      if (video && video.muted) {
+        video.muted = false;
+        video.volume = volume;
+      }
+    };
 
-      document.addEventListener("click", handleUserInteraction);
-      document.addEventListener("touchend", handleUserInteraction);
+    document.addEventListener("click", handleUserInteraction);
+    document.addEventListener("touchend", handleUserInteraction);
 
-      onCleanup(() => {
-        document.removeEventListener("click", handleUserInteraction);
-        document.removeEventListener("touchend", handleUserInteraction);
-      });
+    onCleanup(() => {
+      document.removeEventListener("click", handleUserInteraction);
+      document.removeEventListener("touchend", handleUserInteraction);
     });
   });
 

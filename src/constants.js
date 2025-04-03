@@ -1,5 +1,7 @@
 export const CDN_URL = "https://w-img.b-cdn.net/duckboy";
 
+export const NUMBER_OF_VIDEOS = 23;
+
 export const SCENES = {
   intro: {
     steps: 2,

@@ -107,7 +107,11 @@ export async function preloadVideos(videoUrls) {
     });
   });
 
-  await Promise.all(videoPromises);
+  try {
+    await Promise.all(videoPromises);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function preloadImages(imageUrls) {

@@ -1,6 +1,7 @@
 import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
-import { SCENES } from "./constants";
+import { SCENES, NUMBER_OF_VIDEOS } from "./constants";
+import { randomNumberBetween } from "./utils";
 import state from "./state";
 import AudioPlayer from "./audio-player";
 
@@ -16,7 +17,10 @@ const [ducky, setDucky] = createSignal("");
 
 // Player
 const [crt, setCRT] = createSignal(3);
-const [video, setVideo] = createSignal(1);
+const [video, setVideo] = createSignal(
+  randomNumberBetween(1, NUMBER_OF_VIDEOS)
+);
+const [seenVideos, setSeenVideos] = createSignal([]);
 const [showContent, setShowContent] = createSignal("audio");
 const [videoPlayer, setVideoPlayer] = createStore({
   playing: false,
@@ -45,6 +49,23 @@ const getChannel = () => {
   return "None";
 };
 
+const getUnseenVideo = () => {
+  if (seenVideos().length === NUMBER_OF_VIDEOS) {
+    setSeenVideos([]);
+    return getUnseenVideo();
+  }
+
+  const randomVideo = randomNumberBetween(1, NUMBER_OF_VIDEOS);
+
+  if (seenVideos().includes(randomVideo)) {
+    return getUnseenVideo();
+  }
+
+  setSeenVideos((seenVideos) => [...seenVideos, randomVideo]);
+
+  return randomVideo;
+};
+
 export const gotoNextVideo = () => {
   if (state.showContent() === "static") {
     return;
@@ -56,16 +77,7 @@ export const gotoNextVideo = () => {
     setShowContent("video");
   }, 500);
 
-  setVideo((video) => {
-    const nextVideo = video + 1;
-    const NUMBER_OF_VIDEOS = 12;
-
-    if (nextVideo > NUMBER_OF_VIDEOS) {
-      return 1;
-    }
-
-    return nextVideo;
-  });
+  setVideo(getUnseenVideo());
 };
 
 export const gotoPreviousVideo = () => {
@@ -81,7 +93,6 @@ export const gotoPreviousVideo = () => {
 
   setVideo((video) => {
     const previousVideo = video - 1;
-    const NUMBER_OF_VIDEOS = 12;
 
     if (previousVideo < 0) {
       return NUMBER_OF_VIDEOS - 1;

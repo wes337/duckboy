@@ -105,7 +105,7 @@ export default function PlayerContent() {
         <div class={styles.inner}>
           <video
             id="video"
-            src={`${CDN_URL}/videos/long/${state.video()}.mp4`}
+            src={`${CDN_URL}/videos/cameos/${state.video()}.mp4`}
             playsinline
             onEnded={onEnded}
             muted
