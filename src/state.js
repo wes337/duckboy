@@ -13,6 +13,10 @@ const [scenes, setScenes] = createStore(SCENES);
 const [duckHunt, setDuckHunt] = createSignal(false);
 const [ads, setAds] = createSignal(false);
 const [werewolves, setWerewolves] = createSignal(false);
+const [freeze, setFreeze] = createSignal({
+  iceOne: false,
+  iceTwo: false,
+});
 const [ducky, setDucky] = createSignal("");
 
 // Player
@@ -130,4 +134,6 @@ export default {
   setVideo,
   gotoNextVideo,
   gotoPreviousVideo,
+  freeze,
+  setFreeze,
 };

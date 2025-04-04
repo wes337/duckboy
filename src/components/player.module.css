@@ -174,3 +174,45 @@
   filter: brightness(1.2) saturate(1.5)
     drop-shadow(0 0 4px rgba(255, 255, 255, 0.75));
 }
+
+.ice {
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  pointer-events: none;
+  user-select: none;
+  width: calc(744 / 1231 * 100%);
+  height: calc(896 / 1288 * 100%);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  mix-blend-mode: screen;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.iceTwo {
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  top: 12%;
+  right: 15%;
+  pointer-events: none;
+  user-select: none;
+  width: calc(474 / 1231 * 100%);
+  height: calc(828 / 1288 * 100%);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  mix-blend-mode: screen;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

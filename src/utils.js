@@ -1,6 +1,17 @@
+import { createSignal } from "solid-js";
 import { CDN_URL } from "./constants";
 
+export const [muteSoundEffects, setMuteSoundEffects] = createSignal(false);
+
+export const randomNumberBetween = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
 export const playSoundEffect = (soundEffect, quiet) => {
+  if (muteSoundEffects()) {
+    return;
+  }
+
   return new Promise((resolve) => {
     try {
       const url = `${CDN_URL}/sounds/${soundEffect}`;
@@ -30,10 +41,6 @@ export const playSoundEffect = (soundEffect, quiet) => {
       resolve();
     }
   });
-};
-
-export const randomNumberBetween = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 export function randomElementFromArray(array) {

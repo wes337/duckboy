@@ -11,6 +11,7 @@ import Ads from "./components/ads";
 import Ducky from "./components/ducky";
 import Cursor from "./components/cursor";
 import Werewolves from "./components/werewolves";
+import Freeze from "./components/freeze";
 import Spotify from "./components/spotify";
 import styles from "./app.module.css";
 
@@ -68,6 +69,7 @@ function App() {
       <Ducky />
       <SocialMediaLinks />
       <Werewolves />
+      <Freeze />
       <Spotify />
     </div>
   );

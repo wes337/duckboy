@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Show } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import { playSoundEffect } from "../utils";
 import AudioPlayer from "../audio-player";
 import state from "../state";
@@ -9,6 +9,7 @@ import VolumeSlider from "./volume-slider";
 import Controls from "./controls";
 import PlayerContent from "./player-content";
 import DuckButton from "./duck-button";
+import { Ice } from "./freeze";
 import styles from "./player.module.css";
 
 export default function Player() {
@@ -32,6 +33,51 @@ export default function Player() {
     setInitialized(true);
     AudioPlayer.play();
   });
+
+  const renderAlbumButtons = () => {
+    const albums = [
+      { album: "coping", color: "orange" },
+      { album: "hymns", color: "blue" },
+      { album: "tragic", color: "green" },
+    ];
+
+    return (
+      <div class={styles.albums}>
+        <For each={albums}>
+          {({ album, color }) => {
+            return (
+              <button
+                classList={{
+                  [styles.album]: true,
+                  [styles.active]:
+                    state.showContent() === "audio" &&
+                    AudioPlayer.currentTrack?.album === album,
+                }}
+                onClick={() => {
+                  playSoundEffect("click-softest.mp3", true);
+
+                  if (state.showContent() === "video") {
+                    state.setShowContent("static");
+
+                    setTimeout(() => {
+                      state.setShowContent("audio");
+                      AudioPlayer.gotoAlbum(album);
+                      AudioPlayer.play();
+                      state.setVideoPlayer("playing", false);
+                    }, 500);
+                  } else if (AudioPlayer.currentAlbum !== album) {
+                    AudioPlayer.gotoAlbum(album);
+                  }
+                }}
+              >
+                <img src={`/player/${color}-button.png`} alt="" />
+              </button>
+            );
+          }}
+        </For>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -59,76 +105,8 @@ export default function Player() {
         <Controls />
         <TV />
         <DuckButton />
-        <div class={styles.albums}>
-          <button
-            classList={{
-              [styles.album]: true,
-              [styles.active]:
-                state.showContent() === "audio" &&
-                AudioPlayer.currentTrack?.album === "coping",
-            }}
-            onClick={() => {
-              playSoundEffect("click-softest.mp3", true);
-
-              return; // Remove when album released
-
-              if (
-                state.showContent() !== "audio" ||
-                AudioPlayer.currentAlbum === "coping"
-              ) {
-                return;
-              }
-
-              AudioPlayer.gotoAlbum("coping");
-            }}
-          >
-            <img src={`/player/orange-button.png`} alt="" />
-          </button>
-          <button
-            classList={{
-              [styles.album]: true,
-              [styles.active]:
-                state.showContent() === "audio" &&
-                AudioPlayer.currentTrack?.album === "hymns",
-            }}
-            onClick={() => {
-              playSoundEffect("click-softest.mp3", true);
-
-              if (
-                state.showContent() !== "audio" ||
-                AudioPlayer.currentAlbum === "hymns"
-              ) {
-                return;
-              }
-
-              AudioPlayer.gotoAlbum("hymns");
-            }}
-          >
-            <img src={`/player/blue-button.png`} alt="" />
-          </button>
-          <button
-            classList={{
-              [styles.album]: true,
-              [styles.active]:
-                state.showContent() === "audio" &&
-                AudioPlayer.currentTrack?.album === "tragic",
-            }}
-            onClick={() => {
-              playSoundEffect("click-softest.mp3", true);
-
-              if (
-                state.showContent() !== "audio" ||
-                AudioPlayer.currentAlbum === "tragic"
-              ) {
-                return;
-              }
-
-              AudioPlayer.gotoAlbum("tragic");
-            }}
-          >
-            <img src={`/player/green-button.png`} alt="" />
-          </button>
-        </div>
+        <Ice />
+        {renderAlbumButtons()}
         <div class={styles.channel}>
           <Show when={state.getChannel() !== "None"}>
             <img

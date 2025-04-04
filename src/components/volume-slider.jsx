@@ -1,6 +1,6 @@
 import { createSignal, createEffect, onCleanup } from "solid-js";
 import AudioPlayer from "../audio-player";
-import { playSoundEffect } from "../utils";
+import { playSoundEffect, setMuteSoundEffects } from "../utils";
 import styles from "./volume-slider.module.css";
 
 export default function VolumeSlider() {
@@ -15,6 +15,13 @@ export default function VolumeSlider() {
     const volume =
       (bottom() - MIN_BOTTOM) / (MAX_BOTTOM - MIN_BOTTOM).toFixed(2);
     AudioPlayer.volume = volume;
+
+    setMuteSoundEffects(volume == 0);
+
+    const video = document.getElementById("video");
+    if (video) {
+      video.volume = volume;
+    }
   });
 
   onCleanup(() => {
