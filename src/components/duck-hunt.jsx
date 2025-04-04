@@ -12,7 +12,6 @@ export default function DuckHunt() {
   onMount(() => {
     const preloadImages = () => {
       const imagesToPreload = [
-        "/images/gun.gif",
         "/images/duck-fly.gif",
         "/images/duck-dead.png",
         "/images/blood-01.gif",
@@ -47,7 +46,7 @@ export default function DuckHunt() {
 
       setTimeout(() => {
         setShooting(false);
-      }, 500);
+      }, 350);
     };
 
     document.addEventListener("click", onShoot);
@@ -127,17 +126,19 @@ export default function DuckHunt() {
   });
 
   return (
-    <Show when={state.duckHunt()}>
-      <Portal>
-        <img
-          classList={{ [styles.gun]: true, [styles.show]: !shooting() }}
-          src={"/images/gun.png"}
-        />
-        <img
-          classList={{ [styles.gun]: true, [styles.show]: shooting() }}
-          src={"/images/gun.gif"}
-        />
-      </Portal>
-    </Show>
+    <Portal>
+      <img
+        classList={{
+          [styles.gun]: true,
+          [styles.show]: !shooting(),
+          [styles.hide]: !state.duckHunt(),
+        }}
+        src={"/images/handgun.png"}
+      />
+      <img
+        classList={{ [styles.gun]: true, [styles.show]: shooting() }}
+        src={"/images/handgun-shoot.png"}
+      />
+    </Portal>
   );
 }

@@ -1,11 +1,17 @@
 .gun {
   position: fixed;
-  bottom: -10%;
-  right: 0;
-  width: 20vw;
+  bottom: -5%;
+  right: 15%;
+  width: auto;
+  max-width: 450px;
   height: auto;
   z-index: 10;
   opacity: 0;
+  transition: bottom 0.2s linear;
+}
+
+.gun.hide {
+  bottom: -100%;
 }
 
 .gun.show {
@@ -44,13 +50,19 @@
 
 @media screen and (max-width: 900px) {
   .gun {
-    width: 50%;
-    right: 0;
+    width: 75%;
+    right: -25%;
     z-index: 4;
   }
 
   .duck img {
     width: 40vw;
     height: auto;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .gun {
+    max-width: none;
   }
 }
